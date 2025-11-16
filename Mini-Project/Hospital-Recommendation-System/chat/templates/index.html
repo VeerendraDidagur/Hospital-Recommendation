@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Recommendation System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Hospital Recommendation System</h1>
+
+    <form action="/search" method="POST">
+        <label>Enter Location:</label>
+        <input type="text" name="location" placeholder="e.g., Bangalore" required>
+
+        <label>Enter Speciality:</label>
+        <input type="text" name="speciality" placeholder="e.g., Cardiology" required>
+
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>

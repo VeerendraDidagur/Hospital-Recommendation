@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Recommended Hospitals</h1>
+
+    {% if hospitals %}
+        <ul class="list">
+            {% for h in hospitals %}
+                <li>
+                    <h3>{{ h.name }}</h3>
+                    <p><strong>Location:</strong> {{ h.location }}</p>
+                    <p><strong>Speciality:</strong> {{ h.speciality }}</p>
+                    <p><strong>Rating:</strong> ⭐ {{ h.rating }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hospitals found for your search criteria.</p>
+    {% endif %}
+
+    <a href="/" class="back">Search Again</a>
+</div>
+
+</body>
+</html>
