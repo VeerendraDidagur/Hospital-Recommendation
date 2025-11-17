@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: hospital-recommendation-system
+    env: docker
+    plan: free
+    autoDeploy: true
+    
+    # Render will look for Dockerfile automatically
+    dockerfilePath: ./Dockerfile
+    
+    # Optional health check
+    healthCheckPath: /
+    
+    # Environment variables (optional)
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
