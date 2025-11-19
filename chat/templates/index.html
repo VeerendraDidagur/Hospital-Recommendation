@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hospital Recommendation System</title>
+    <title>Hospital Finder</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
-<div class="container">
     <h1>Hospital Recommendation System</h1>
 
-    <form action="/search" method="POST">
-        <label>Enter Location:</label>
-        <input type="text" name="location" placeholder="e.g., Bangalore" required>
-
-        <label>Enter Speciality:</label>
-        <input type="text" name="speciality" placeholder="e.g., Cardiology" required>
-
+    <form method="POST">
+        <input type="text" name="city" placeholder="Enter city name" required>
         <button type="submit">Search</button>
     </form>
-</div>
 
-<script src="/static/script.js"></script>
+    {% if results %}
+        <h2>Results:</h2>
+        <ul>
+            {% for hospital in results %}
+            <li>
+                <strong>{{ hospital.name }}</strong><br>
+                Location: {{ hospital.location }}<br>
+                Rating: {{ hospital.rating }}
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+
 </body>
 </html>
