@@ -20,4 +20,20 @@ This is a simple hospital recommendation system built using **Python Flask**.
     ```
 
 ## 📂 Project Structure
+# Hospital Recommendation System (Flask)
+
+A lightweight Flask app that lets users search for hospitals by city.
+Designed to deploy smoothly on Render.
+
+## Run locally
+
+
+## Deploy on Render
+
+Create a new Web Service and set:
+
+- **Build Command:** pip install -r requirements.txt
+- **Start Command:** gunicorn app:app
+- **Root Directory:** (leave empty)
+
 
