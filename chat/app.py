@@ -1,34 +1,24 @@
 from flask import Flask, render_template, request
-import pandas as pd
 
 app = Flask(__name__)
 
-# Sample hospital dataset (You can replace with real data)
-data = pd.DataFrame([
-    {"name": "City Hospital", "location": "Bangalore", "rating": 4.5, "speciality": "Cardiology"},
-    {"name": "Global Health Care", "location": "Hyderabad", "rating": 4.2, "speciality": "Neurology"},
-    {"name": "Apollo Hospital", "location": "Chennai", "rating": 4.8, "speciality": "Orthopedics"},
-    {"name": "AIIMS Hospital", "location": "Delhi", "rating": 4.9, "speciality": "General"},
-    {"name": "Manipal Hospital", "location": "Bangalore", "rating": 4.7, "speciality": "Cardiology"}
-])
+# Dummy hospital dataset (without pandas)
+hospitals = [
+    {"name": "City Hospital", "location": "Mumbai", "rating": 4.5},
+    {"name": "Green Valley Hospital", "location": "Delhi", "rating": 4.2},
+    {"name": "Sunrise Medical Center", "location": "Bangalore", "rating": 4.7},
+    {"name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4},
+]
 
-@app.route("/")
-def home():
-    return render_template("index.html")
-
-@app.route("/search", methods=["POST"])
-def search():
-    location = request.form.get("location").lower()
-    speciality = request.form.get("speciality").lower()
-
-    results = data[
-        (data["location"].str.lower().str.contains(location)) &
-        (data["speciality"].str.lower().str.contains(speciality))
-    ]
-
-    return render_template("result.html", hospitals=results.to_dict(orient="records"))
+@app.route("/", methods=["GET", "POST"])
+def index():
+    results = []
+    if request.method == "POST":
+        city = request.form.get("city").lower()
+        for hospital in hospitals:
+            if hospital["location"].lower() == city:
+                results.append(hospital)
+    return render_template("index.html", results=results)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
-
-
