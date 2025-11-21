@@ -1,32 +1,69 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
+import uuid
 
-app = Flask(__name__)
+app = Flask(_name_)
+app.secret_key = "change_this_secret"  # use env var in prod
 
-# Dummy hospital dataset (without pandas)
+# Simple in-memory dataset (replace with DB in production)
 hospitals = [
-    {"name": "City Hospital", "location": "Mumbai", "rating": 4.5},
-    {"name": "Green Valley Hospital", "location": "Delhi", "rating": 4.2},
-    {"name": "Sunrise Medical Center", "location": "Bangalore", "rating": 4.7,"contact no":"9108497662","Dr Name":"Santosh"},
-    {"name": "East Point Hospital", "location": "Bangalore", "rating": 4.9,"contact no":"9108497662","Dr Name":"Shredevi"},
-    {"name": "H Nanjappa Hospital", "location": "Bangalore", "rating": 4.6,"contact no":"9108497662","Dr Name":"Treveni"},
-    {"name": "V Care Hospital", "location": "Bangalore", "rating": 4.4,"contact no":"9108497662","Dr Name":"Rakshit"},
-    {"name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4},
+    {"id": "h1", "name": "City Hospital", "location": "Mumbai", "rating": 4.5, "address":"123 MG Road, Mumbai"},
+    {"id": "h2", "name": "Green Valley Hospital", "location": "Delhi", "rating": 4.2, "address":"45 Connaught Place, Delhi"},
+    {"id": "h3", "name": "Sunrise Medical Center", "location": "Bangalore", "rating": 4.7, "address":"88 MG Road, Bangalore"},
+    {"id": "h4", "name": "East Point Hospital", "location": "Bangalore", "rating": 4.8, "address":"Virgonagar Post,Aavalahalli"},
+    {"id": "h5", "name": "H Nanjappa Hospital", "location": "Bangalore", "rating": 4.9, "address":"Malleshwaram, Bangalore"},
+    {"id": "h6", "name": "V Care Hospital", "location": "Bangalore", "rating": 4.4, "address":"K R Puram, Bangalore"},
+    {"id": "h7", "name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4, "address":"12 Banjara Hills, Hyderabad"},
 ]
 
+# Home/search page
 @app.route("/", methods=["GET", "POST"])
 def index():
-    results = []
+    results = hospitals
     if request.method == "POST":
-        city = request.form.get("city").lower()
-        for hospital in hospitals:
-            if hospital["location"].lower() == city:
-                results.append(hospital)
+        city = request.form.get("city", "").strip().lower()
+        results = [h for h in hospitals if h["location"].lower() == city]
     return render_template("index.html", results=results)
 
-if __name__ == "__main__":
+# Hospital detail page
+@app.route("/hospital/<hid>", methods=["GET"])
+def hospital_detail(hid):
+    h = next((x for x in hospitals if x["id"] == hid), None)
+    if not h:
+        flash("Hospital not found", "error")
+        return redirect(url_for("index"))
+    # Provide the "Develop m-Health Applications" plan here (or fetch it from DB)
+    plan = {
+        "title": "Develop m-Health Applications",
+        "steps": [
+            {"label": "Design the app architecture",
+             "desc": "Build a mobile app (Android/iOS) that connects to a centralized DB of hospitals, clinics, and medical facilities."},
+            {"label": "Integrate APIs & data sources",
+             "desc": "Use hospital APIs, government health DBs and GIS (Google Maps / OpenStreetMap) for location & facility details."},
+            {"label": "Implement key features",
+             "desc": "User registration, search/filter, appointment booking, emergency routing."},
+            {"label": "Ensure data security",
+             "desc": "Encryption, authentication, HIPAA/GDPR compliance for patient data."},
+        ]
+    }
+    return render_template("hospital.html", hospital=h, plan=plan)
+
+# Simple appointment booking endpoint (demo)
+@app.route("/hospital/<hid>/book", methods=["POST"])
+def book_appointment(hid):
+    h = next((x for x in hospitals if x["id"] == hid), None)
+    if not h:
+        flash("Hospital not found", "error")
+        return redirect(url_for("index"))
+
+    # In real app: validate user auth, store booking to DB, send confirmation, etc.
+    name = request.form.get("name", "Anonymous")
+    phone = request.form.get("phone", "")
+    datetime = request.form.get("datetime", "")
+    # Fake booking id:
+    booking_id = str(uuid.uuid4())[:8]
+    # For demo we just flash success:
+    flash(f"Appointment requested at {h['name']} for {name} on {datetime}. Booking ID: {booking_id}", "success")
+    return redirect(url_for("hospital_detail", hid=hid))
+
+if _name_ == "_main_":
     app.run(host="0.0.0.0", port=10000)
-
-
-
-
-
