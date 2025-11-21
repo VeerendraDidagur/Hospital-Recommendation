@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head><title>{{ hospital.name }}</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+  <a href="{{ url_for('index') }}">&larr; Back</a>
+  <h1>{{ hospital.name }}</h1>
+  <p><strong>Location:</strong> {{ hospital.location }} — {{ hospital.address }}</p>
+  <p><strong>Rating:</strong> {{ hospital.rating }}</p>
+
+  <h2>{{ plan.title }}</h2>
+  <ol>
+    {% for s in plan.steps %}
+      <li>
+        <strong>{{ s.label }}</strong>
+        <p>{{ s.desc }}</p>
+      </li>
+    {% endfor %}
+  </ol>
+
+  <h3>Book an Appointment (Demo)</h3>
+  <form action="{{ url_for('book_appointment', hid=hospital.id) }}" method="POST">
+    <input name="name" placeholder="Your name" required><br>
+    <input name="phone" placeholder="Phone"><br>
+    <input name="datetime" placeholder="Preferred date/time"><br>
+    <button type="submit">Request Appointment</button>
+  </form>
+
+  <h3>Quick Actions</h3>
+  <ul>
+    <li><a href="https://www.google.com/maps/search/?api=1&query={{ hospital.address | urlencode }}" target="_blank">Open in Google Maps</a></li>
+    <li><a href="#">Start m-Health Project (proposal)</a></li>
+  </ul>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class="flashes">
+      {% for cat, msg in messages %}
+        <li class="{{cat}}">{{msg}}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+</body>
+</html>
