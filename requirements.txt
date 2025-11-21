@@ -1,3 +1,9 @@
 flask
 gunicorn
-
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+passlib[bcrypt]
+python-jose
+pydantic
