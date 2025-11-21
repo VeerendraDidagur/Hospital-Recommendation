@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import uuid
 
-app = Flask(_name_)
+app = Flask(__name__)
+
 app.secret_key = "change_this_secret"  # use env var in prod
 
 # Simple in-memory dataset (replace with DB in production)
@@ -67,3 +68,4 @@ def book_appointment(hid):
 
 if _name_ == "_main_":
     app.run(host="0.0.0.0", port=10000)
+
