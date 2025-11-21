@@ -7,6 +7,9 @@ hospitals = [
     {"name": "City Hospital", "location": "Mumbai", "rating": 4.5},
     {"name": "Green Valley Hospital", "location": "Delhi", "rating": 4.2},
     {"name": "Sunrise Medical Center", "location": "Bangalore", "rating": 4.7,"contact no:9108497662,Dr Name:Santosh"},
+    {"name": "East Point Hospital", "location": "Bangalore", "rating": 4.9,"contact no:9108497662,Dr Name:Shredevi"},
+    {"name": "H Nanjappa Hospital", "location": "Bangalore", "rating": 4.6,"contact no:9108497662,Dr Name:Treveni"},
+    {"name": "V Care Hospital", "location": "Bangalore", "rating": 4.4,"contact no:9108497662,Dr Name:Santosh},
     {"name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4},
 ]
 
@@ -22,4 +25,5 @@ def index():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
