@@ -1,36 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head><title>{{ hospital.name }}</title><link rel="stylesheet" href="/static/style.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ hospital.name }} - Details</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .container { max-width: 700px; margin: auto; background: white; padding: 25px; border-radius: 10px; }
+        .btn {
+            background: #007bff;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .btn:hover { background: #0056b3; }
+        .back { margin-top: 20px; display: inline-block; }
+    </style>
+</head>
 <body>
-  <a href="{{ url_for('index') }}">&larr; Back</a>
-  <h1>{{ hospital.name }}</h1>
-  <p><strong>Location:</strong> {{ hospital.location }} — {{ hospital.address }}</p>
-  <p><strong>Rating:</strong> {{ hospital.rating }}</p>
+<div class="container">
 
+    <h1>{{ hospital.name }}</h1>
 
+    <p><strong>📍 Location:</strong> {{ hospital.location }}</p>
+    <p><strong>🏥 Address:</strong> {{ hospital.address }}</p>
+    <p><strong>⭐ Rating:</strong> {{ hospital.rating }}</p>
 
-  <h3>Book an Appointment (Demo)</h3>
-  <form action="{{ url_for('book_appointment', hid=hospital.id) }}" method="POST">
-    <input name="name" placeholder="Your name" required><br>
-    <input name="phone" placeholder="Phone"><br>
-    <input name="datetime" placeholder="Preferred date/time"><br>
-    <button type="submit">Request Appointment</button>
-  </form>
+    <hr style="margin: 25px 0;">
 
-  <h3>Quick Actions</h3>
-  <ul>
-    <li><a href="https://www.google.com/maps/search/?api=1&query={{ hospital.address | urlencode }}" target="_blank">Open in Google Maps</a></li>
-    <li><a href="#">Start m-Health Project (proposal)</a></li>
-  </ul>
+    <h2>Select medical assistance</h2>
+    <p>To continue, please choose the relevant option for your health concern.</p>
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul class="flashes">
-      {% for cat, msg in messages %}
-        <li class="{{cat}}">{{msg}}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+    <!-- Button to go to Specialist/Symptom selection -->
+    <a href="/hospital/{{ hospital.id }}/choose" class="btn">
+        Proceed → Select Specialist / Symptoms
+    </a>
+
+    <br><br>
+    <a href="/" class="back">⬅ Back to Hospital Search</a>
+
+</div>
 </body>
 </html>
