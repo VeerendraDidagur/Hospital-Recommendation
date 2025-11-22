@@ -18,7 +18,7 @@ hospitals = [
     {"id": "h6", "name": "V Care Hospital", "location": "Bangalore", "rating": 4.4, "address":"K R Puram, Bangalore"},
     {"id": "h7", "name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4, "address":"12 Banjara Hills, Hyderabad"},
 ]
-east_point = Hospital(
+east_point = hospitals(
     name="East Point Hospital",
     city="Bangalore",
     rating=4.8,
@@ -93,6 +93,7 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
 with app.app_context():
     db.create_all()
+
 
 
 
