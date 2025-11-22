@@ -100,7 +100,18 @@ def doctors(hid):
 @app.route('/choose_doctor')
 def choose_doctor():
     speciality = request.args.get('speciality')
-    # query DB doctors with same speciality
+    hospital_id = request.args.get('hid')  # if you passed hospital id
+
+    # filter doctors based on specialization
+    matched_doctors = [d for d in doctors if speciality.lower() in d['specialization'].lower()]
+
+    # even if no doctors match, we still return a template
+    return render_template(
+        "doctors.html",
+        doctors=matched_doctors,
+        speciality=speciality
+    )
+
 
 
 @app.route("/hospital/<hid>/book", methods=["POST"])
@@ -114,6 +125,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
