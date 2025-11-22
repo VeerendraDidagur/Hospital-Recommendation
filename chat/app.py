@@ -85,20 +85,8 @@ class User(db.Model):
     email = db.Column(db.String(200), unique=True)
     password = db.Column(db.String(200), nullable=False)
 with app.app_context():
-    east_point = Hospital(
-        name="East Point Hospital",
-        address="3P39+M3 Bengaluru, Karnataka",
-        city="Bangalore",
-        rating=4.8,
-        specialization="Multi-specialty",
-        cost_category=2,
-        specialists=["Cardiology", "Neurology", "Orthopedics", "Dermatology"],
-        symptoms=["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"]
-    )
-    db.session.add(east_point)
-    db.session.commit()
-    print("Hospital added successfully!")
     db.create_all()
+
 
 
 
