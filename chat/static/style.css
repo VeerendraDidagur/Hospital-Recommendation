@@ -37,7 +37,7 @@ li {
         padding: 10px 16px;
         margin: 6px;
         background: #007bff;             /* bright blue */
-        color: white;                    /* white text for contrast */
+        color: black;                    /* white text for contrast */
         font-size: 15px;
         border-radius: 25px;
         cursor: pointer;
@@ -48,4 +48,5 @@ li {
         background: #0056b3;             /* dark blue on hover */
         transform: scale(1.08);
     }
+
 
