@@ -84,6 +84,9 @@ class Hospital(db.Model):
     specialization = db.Column(db.String(200))
     cost_category = db.Column(db.Integer)  # 1=Low, 2=Medium, 3=High
     rating = db.Column(db.Float)
+    # NEW FIELDS
+    specialists = db.Column(db.ARRAY(db.String))    # Example: ["Cardiology","Neurology","Orthopedics"]
+    symptoms = db.Column(db.ARRAY(db.String))       # Example: ["Fever","Headache","Joint Pain","Cough"]
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -92,6 +95,7 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
 with app.app_context():
     db.create_all()
+
 
 
 
