@@ -117,9 +117,20 @@ def book_appointment(hid):
 
     flash(f"Appointment booked at {h['name']} for {name} on {datetime}. Booking ID: {booking_id}", "success")
     return redirect(url_for("hospital_detail", hid=hid))
+    
+@app.route("/hospital/<hid>/choose")
+def choose_category(hid):
+    h = next((x for x in hospitals if x["id"] == hid), None)
+    if not h:
+        flash("Hospital not found", "error")
+        return redirect(url_for("index"))
+
+    return render_template("choose.html", hospital=h)
+    
 
 # -------------------------
 # RUN
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
