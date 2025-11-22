@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <title>Doctors for {{ symptom }} | {{ hospital.name }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f8f9fa; padding: 20px; }
+        h1, h2 { color: #333; }
+
+        .doctor-card {
+            display: flex;
+            gap: 25px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            align-items: center;
+        }
+
+        .doctor-photo {
+            width: 210px;
+            height: 158px; /* 4:3 ratio */
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .doctor-details {
+            font-size: 17px;
+        }
+
+        .doctor-details p { margin: 6px 0; }
+
+        .book-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 12px;
+        }
+
+        .book-btn:hover { background: #0056b3; }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Doctors for symptom: "{{ symptom }}"</h1>
+    <h3>🏥 Hospital: {{ hospital.name }}</h3>
+
+    {% for d in doctors %}
+    <form action="{{ url_for('book_doctor', hid=hospital.id) }}" method="POST" class="doctor-card">
+        <img src="{{ d.image }}" alt="Doctor Photo" class="doctor-photo">
+
+        <div class="doctor-details">
+            <p><strong>👨‍⚕️ Name:</strong> {{ d.name }}</p>
+            <p><strong>🎯 Specialties:</strong> {{ d.specialties | join(', ') }}</p>
+            <p><strong>📅 Experience:</strong> {{ d.experience }} years</p>
+            <p><strong>⭐ Rating:</strong> {{ d.rating }}</p>
+            <p><strong>🎓 Qualification:</strong> {{ d.qualification }}</p>
+
+            <input type="hidden" name="name" value="{{ d.name }}">
+            <button class="book-btn" type="submit">Book Appointment</button>
+        </div>
+    </form>
+    {% endfor %}
+
+    <a class="back" href="{{ url_for('hospital_detail', hid=hospital.id) }}">← Back to Hospital</a>
+
+</body>
+</html>
