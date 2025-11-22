@@ -18,16 +18,21 @@ hospitals = [
     {"id": "h6", "name": "V Care Hospital", "location": "Bangalore", "rating": 4.4, "address":"K R Puram, Bangalore"},
     {"id": "h7", "name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4, "address":"12 Banjara Hills, Hyderabad"},
 ]
-east_point = hospitals(
-    name="East Point Hospital",
-    city="Bangalore",
-    rating=4.8,
-    address="3P39+M3 Bengaluru, Karnataka",
-    specialists=["Cardiology", "Neurology", "Orthopedics", "Dermatology"],
-    symptoms=["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"]
-)
-db.session.add(east_point)
-db.session.commit()
+with app.app_context():
+    east_point = Hospital(
+        name="East Point Hospital",
+        address="3P39+M3 Bengaluru, Karnataka",
+        city="Bangalore",
+        rating=4.8,
+        specialization="Multi-specialty",
+        cost_category=2,
+        specialists=["Cardiology", "Neurology", "Orthopedics", "Dermatology"],
+        symptoms=["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"]
+    )
+    db.session.add(east_point)
+    db.session.commit()
+    print("Hospital added successfully!")
+
 
 # Home/search page
 @app.route("/", methods=["GET", "POST"])
@@ -93,6 +98,7 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
 with app.app_context():
     db.create_all()
+
 
 
 
