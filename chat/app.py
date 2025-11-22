@@ -39,27 +39,15 @@ def index():
     return render_template("index.html", results=results)
 
 # Hospital detail page
-@app.route("/hospital/<hid>", methods=["GET"])
+@app.route("/hospital/<int:hid>")
 def hospital_detail(hid):
-    h = next((x for x in hospitals if x["id"] == hid), None)
-    if not h:
+    hospital = Hospital.query.get(hid)
+    if not hospital:
         flash("Hospital not found", "error")
-        return redirect(url_for("index"))
-    # Provide the "Develop m-Health Applications" plan here (or fetch it from DB)
-    plan = {
-        "title": "Develop m-Health Applications",
-        "steps": [
-            {"label": "Design the app architecture",
-             "desc": "Build a mobile app (Android/iOS) that connects to a centralized DB of hospitals, clinics, and medical facilities."},
-            {"label": "Integrate APIs & data sources",
-             "desc": "Use hospital APIs, government health DBs and GIS (Google Maps / OpenStreetMap) for location & facility details."},
-            {"label": "Implement key features",
-             "desc": "User registration, search/filter, appointment booking, emergency routing."},
-            {"label": "Ensure data security",
-             "desc": "Encryption, authentication, HIPAA/GDPR compliance for patient data."},
-        ]
-    }
-    return render_template("hospital.html", hospital=h, plan=plan)
+        return redirect(url_for("home"))
+
+    return render_template("hospital.html", hospital=hospital)
+
 
 # Simple appointment booking endpoint (demo)
 @app.route("/hospital/<hid>/book", methods=["POST"])
@@ -105,6 +93,7 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
 with app.app_context():
     db.create_all()
+
 
 
 
