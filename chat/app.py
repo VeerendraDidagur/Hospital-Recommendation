@@ -85,9 +85,6 @@ class User(db.Model):
     email = db.Column(db.String(200), unique=True)
     password = db.Column(db.String(200), nullable=False)
 with app.app_context():
-    db.create_all()
-
-with app.app_context():
     east_point = Hospital(
         name="East Point Hospital",
         address="3P39+M3 Bengaluru, Karnataka",
@@ -101,6 +98,7 @@ with app.app_context():
     db.session.add(east_point)
     db.session.commit()
     print("Hospital added successfully!")
+    db.create_all()
 
 
 
