@@ -74,7 +74,7 @@ class Hospital(db.Model):
     # NEW FIELDS
     specialists = db.Column(db.ARRAY(db.String))    # Example: ["Cardiology","Neurology","Orthopedics"]
     symptoms = db.Column(db.ARRAY(db.String))       # Example: ["Fever","Headache","Joint Pain","Cough"]
-    with app.app_context():
+with app.app_context():
     db.create_all()
 
 
@@ -100,6 +100,7 @@ with app.app_context():
     db.session.add(east_point)
     db.session.commit()
     print("Hospital added successfully!")
+
 
 
 
