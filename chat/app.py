@@ -97,6 +97,12 @@ def doctors(hid):
 
     return render_template("doctors.html", hospital=h, doctors=match, symptom=symptom)
 
+@app.route('/choose_doctor')
+def choose_doctor():
+    speciality = request.args.get('speciality')
+    # query DB doctors with same speciality
+
+
 @app.route("/hospital/<hid>/book", methods=["POST"])
 def book_doctor(hid):
     doctor_name = request.form.get("name")
@@ -108,6 +114,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
