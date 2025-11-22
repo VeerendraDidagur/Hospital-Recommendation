@@ -78,10 +78,22 @@ def book_appointment(hid):
         flash("Hospital not found", "error")
         return redirect(url_for("index"))
 
-    name = request.form.get("name", "Anonymous")
+    name = request.form.get("name")
     phone = request.form.get("phone")
-    datetime = request.form.get("datetime")
-    booking_id = str(uuid.uuid4())[:8]
+    dt = request.form.get("datetime")
+
+    new_appt = Appointment(
+        patient_name=name,
+        phone=phone,
+        datetime=dt,
+        hospital_id=hid,
+        status="Pending"
+    )
+    db.session.add(new_appt)
+    db.session.commit()
+
+    flash("Appointment submitted successfully! Hospital will contact you.", "success")
+    return redirect(url_for("hospital_detail", hid=hid))
 
     flash(f"Appointment requested at {h.name} for {name} on {datetime}. Booking ID: {booking_id}", "success")
     return redirect(url_for("hospital_detail", hid=hid))
@@ -95,8 +107,14 @@ def book_appointment(hid):
     status = db.Column(db.String(50), default="Pending")
 
     hospital = db.relationship("Hospital")
+    appointments = db.relationship("Appointment", backref="hospital", lazy=True)
+
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+with app.app_context():
+    db.create_all()
+
+
 
