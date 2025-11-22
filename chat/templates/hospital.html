@@ -1,27 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>{{ hospital.name }} - Details</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
-        .container { max-width: 700px; margin: auto; background: white; padding: 25px; border-radius: 10px; }
-        .btn {
-            background: #007bff;
-            padding: 12px 20px;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 6px;
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        .btn:hover { background: #0056b3; }
-        .back { margin-top: 20px; display: inline-block; }
+        .section { margin-bottom: 20px; }
+        .tag { display: inline-block; padding: 6px 12px; margin: 4px; background: #f0f0f0; border-radius: 8px; cursor: pointer; }
+        .tag:hover { background: #d1e7dd; }
+        .symptom-form { margin-top: 15px; }
     </style>
 </head>
 <body>
-<div class="container">
 
     <h1>{{ hospital.name }}</h1>
 
@@ -29,19 +18,23 @@
     <p><strong>🏥 Address:</strong> {{ hospital.address }}</p>
     <p><strong>⭐ Rating:</strong> {{ hospital.rating }}</p>
 
-    <hr style="margin: 25px 0;">
+    <div class="section">
+        <h2>🩺 Most Searched Specialists</h2>
+        {% for specialist in hospital.specialists %}
+            <span class="tag">{{ specialist }}</span>
+        {% endfor %}
+    </div>
 
-    <h2>Select medical assistance</h2>
-    <p>To continue, please choose the relevant option for your health concern.</p>
+    <div class="section">
+        <h2>🤒 Most Common Symptoms</h2>
+        <form class="symptom-form" action="{{ url_for('doctors', hid=hospital.id) }}" method="POST">
+            {% for symptom in hospital.symptoms %}
+                <button type="submit" name="symptom" value="{{ symptom }}" class="tag">⚠ {{ symptom }}</button>
+            {% endfor %}
+        </form>
+    </div>
 
-    <!-- Button to go to Specialist/Symptom selection -->
-    <a href="/hospital/{{ hospital.id }}/choose" class="btn">
-        Proceed → Select Specialist / Symptoms
-    </a>
-
-    <br><br>
-    <a href="/" class="back">⬅ Back to Hospital Search</a>
-
-</div>
+    <p><a href="{{ url_for('home') }}">← Back to Search</a></p>
 </body>
 </html>
+   
