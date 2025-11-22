@@ -35,6 +35,8 @@ hospitals = [
         "id": "h2",
         "name": "East Point Hospital",
         "location": "Bangalore",
+        "address": "3P93+M3 Bengaluru,Karnataka",
+        "rating": 4.5,
         "specialists": ["Orthopedic", "Dentist", "Cardiologist", "ENT"],
         "symptoms": ["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"],
         "doctors": [
@@ -106,6 +108,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
