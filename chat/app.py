@@ -1,22 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import uuid
-from flask_sqlalchemy import SQLAlchemy
-from config import DATABASE_URL
 
-
-app = Flask(__name__)
-
+app = Flask(_name_)
 app.secret_key = "change_this_secret"  # use env var in prod
 
 # Simple in-memory dataset (replace with DB in production)
 hospitals = [
-    {"id": "1", "name": "City Hospital", "location": "Mumbai", "rating": 4.5, "address":"123 MG Road, Mumbai"},
-    {"id": "2", "name": "Green Valley Hospital", "location": "Delhi", "rating": 4.2, "address":"45 Connaught Place, Delhi"},
-    {"id": "3", "name": "Sunrise Medical Center", "location": "Bangalore", "rating": 4.7, "address":"88 MG Road, Bangalore"},
-    {"id": "4", "name": "East Point Hospital", "location": "Bangalore", "rating": 4.8, "address":"3P39+M3 Bengaluru,Karnataka"},
-    {"id": "5", "name": "H Nanjappa Hospital", "location": "Bangalore", "rating": 4.9, "address":"Malleshwaram, Bangalore"},
-    {"id": "6", "name": "V Care Hospital", "location": "Bangalore", "rating": 4.4, "address":"K R Puram, Bangalore"},
-    {"id": "7", "name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4, "address":"12 Banjara Hills, Hyderabad"},
+    {"id": "h1", "name": "City Hospital", "location": "Mumbai", "rating": 4.5, "address":"123 MG Road, Mumbai"},
+    {"id": "h2", "name": "Green Valley Hospital", "location": "Delhi", "rating": 4.2, "address":"45 Connaught Place, Delhi"},
+    {"id": "h3", "name": "Sunrise Medical Center", "location": "Bangalore", "rating": 4.7, "address":"88 MG Road, Bangalore"},
+    {"id": "h4", "name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4, "address":"12 Banjara Hills, Hyderabad"},
 ]
 
 # Home/search page
@@ -29,15 +22,27 @@ def index():
     return render_template("index.html", results=results)
 
 # Hospital detail page
-@app.route("/hospital/<int:hid>")
+@app.route("/hospital/<hid>", methods=["GET"])
 def hospital_detail(hid):
-    hospital = Hospital.query.get(hid)
-    if not hospital:
+    h = next((x for x in hospitals if x["id"] == hid), None)
+    if not h:
         flash("Hospital not found", "error")
-        return redirect(url_for("home"))
-
-    return render_template("hospital.html", hospital=hospital)
-
+        return redirect(url_for("index"))
+    # Provide the "Develop m-Health Applications" plan here (or fetch it from DB)
+    plan = {
+        "title": "Develop m-Health Applications",
+        "steps": [
+            {"label": "Design the app architecture",
+             "desc": "Build a mobile app (Android/iOS) that connects to a centralized DB of hospitals, clinics, and medical facilities."},
+            {"label": "Integrate APIs & data sources",
+             "desc": "Use hospital APIs, government health DBs and GIS (Google Maps / OpenStreetMap) for location & facility details."},
+            {"label": "Implement key features",
+             "desc": "User registration, search/filter, appointment booking, emergency routing."},
+            {"label": "Ensure data security",
+             "desc": "Encryption, authentication, HIPAA/GDPR compliance for patient data."},
+        ]
+    }
+    return render_template("hospital.html", hospital=h, plan=plan)
 
 # Simple appointment booking endpoint (demo)
 @app.route("/hospital/<hid>/book", methods=["POST"])
@@ -57,48 +62,5 @@ def book_appointment(hid):
     flash(f"Appointment requested at {h['name']} for {name} on {datetime}. Booking ID: {booking_id}", "success")
     return redirect(url_for("hospital_detail", hid=hid))
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     app.run(host="0.0.0.0", port=10000)
-
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-db = SQLAlchemy(app)
-class Hospital(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    address = db.Column(db.String(200))
-    city = db.Column(db.String(100))
-    specialization = db.Column(db.String(200))
-    cost_category = db.Column(db.Integer)  # 1=Low, 2=Medium, 3=High
-    rating = db.Column(db.Float)
-    # NEW FIELDS
-    specialists = db.Column(db.ARRAY(db.String))    # Example: ["Cardiology","Neurology","Orthopedics"]
-    symptoms = db.Column(db.ARRAY(db.String))       # Example: ["Fever","Headache","Joint Pain","Cough"]
-with app.app_context():
-    db.create_all()
-
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(200), unique=True)
-    password = db.Column(db.String(200), nullable=False)
-with app.app_context():
-    db.create_all()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
