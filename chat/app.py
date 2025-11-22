@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import uuid
+from flask_sqlalchemy import SQLAlchemy
+from config import DATABASE_URL
+
 
 app = Flask(__name__)
 
@@ -68,6 +71,27 @@ def book_appointment(hid):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+class Hospital(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    address = db.Column(db.String(200))
+    city = db.Column(db.String(100))
+    specialization = db.Column(db.String(200))
+    cost_category = db.Column(db.Integer)  # 1=Low, 2=Medium, 3=High
+    rating = db.Column(db.Float)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), unique=True)
+    password = db.Column(db.String(200), nullable=False)
+with app.app_context():
+    db.create_all()
 
 
 
