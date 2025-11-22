@@ -86,5 +86,17 @@ def book_appointment(hid):
     flash(f"Appointment requested at {h.name} for {name} on {datetime}. Booking ID: {booking_id}", "success")
     return redirect(url_for("hospital_detail", hid=hid))
 
+    class Appointment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_name = db.Column(db.String(200), nullable=False)
+    phone = db.Column(db.String(50))
+    datetime = db.Column(db.String(100))
+    hospital_id = db.Column(db.Integer, db.ForeignKey("hospital.id"))
+    status = db.Column(db.String(50), default="Pending")
+
+    hospital = db.relationship("Hospital")
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
