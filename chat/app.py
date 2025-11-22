@@ -126,6 +126,34 @@ def choose_category(hid):
         return redirect(url_for("index"))
 
     return render_template("choose.html", hospital=h)
+
+@app.route('/choose/<hospital_name>')
+def choose(hospital_name):
+    hospital = hospitals.get(hospital_name)
+    return render_template(
+        "choose.html",
+        hospital=hospital,
+        symptoms=hospital["symptoms"],
+        specialists=hospital["specialists"]
+    )
+@app.route('/doctors/<hospital_name>', methods=['POST'])
+def doctors(hospital_name):
+    selected_symptom = request.form.get("selected_symptom")
+    hospital = hospitals.get(hospital_name)
+
+    # filter doctors based on symptom
+    filtered_doctors = [
+        d for d in hospital["doctors"]
+        if selected_symptom in d["specialties"]
+    ]
+
+    return render_template(
+        "doctors.html",
+        hospital=hospital,
+        symptom=selected_symptom,
+        doctors=filtered_doctors
+    )
+
     
 
 # -------------------------
@@ -133,4 +161,5 @@ def choose_category(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
