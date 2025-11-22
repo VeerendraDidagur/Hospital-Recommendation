@@ -18,6 +18,16 @@ hospitals = [
     {"id": "h6", "name": "V Care Hospital", "location": "Bangalore", "rating": 4.4, "address":"K R Puram, Bangalore"},
     {"id": "h7", "name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4, "address":"12 Banjara Hills, Hyderabad"},
 ]
+east_point = Hospital(
+    name="East Point Hospital",
+    city="Bangalore",
+    rating=4.8,
+    address="3P39+M3 Bengaluru, Karnataka",
+    specialists=["Cardiology", "Neurology", "Orthopedics", "Dermatology"],
+    symptoms=["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"]
+)
+db.session.add(east_point)
+db.session.commit()
 
 # Home/search page
 @app.route("/", methods=["GET", "POST"])
