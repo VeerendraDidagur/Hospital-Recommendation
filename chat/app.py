@@ -13,7 +13,7 @@ hospitals = [
     {"id": "h1", "name": "City Hospital", "location": "Mumbai", "rating": 4.5, "address":"123 MG Road, Mumbai"},
     {"id": "h2", "name": "Green Valley Hospital", "location": "Delhi", "rating": 4.2, "address":"45 Connaught Place, Delhi"},
     {"id": "h3", "name": "Sunrise Medical Center", "location": "Bangalore", "rating": 4.7, "address":"88 MG Road, Bangalore"},
-    {"id": "h4", "name": "East Point Hospital", "location": "Bangalore", "rating": 4.8, "address":"Virgonagar Post,Aavalahalli"},
+    {"id": "h4", "name": "East Point Hospital", "location": "Bangalore", "rating": 4.8, "address":"3P39+M3 Bengaluru,Karnataka"},
     {"id": "h5", "name": "H Nanjappa Hospital", "location": "Bangalore", "rating": 4.9, "address":"Malleshwaram, Bangalore"},
     {"id": "h6", "name": "V Care Hospital", "location": "Bangalore", "rating": 4.4, "address":"K R Puram, Bangalore"},
     {"id": "h7", "name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4, "address":"12 Banjara Hills, Hyderabad"},
@@ -92,6 +92,7 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
 with app.app_context():
     db.create_all()
+
 
 
 
