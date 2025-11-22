@@ -6,6 +6,24 @@
   <h1>{{ hospital.name }}</h1>
   <p><strong>Location:</strong> {{ hospital.location }} — {{ hospital.address }}</p>
   <p><strong>Rating:</strong> {{ hospital.rating }}</p>
+  <h2 style="margin-top: 30px;">🩺 Most Searched Specialists</h2>
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+  {% for sp in hospital.specialists %}
+    <div style="padding:10px 20px; border-radius:12px; background:#e3f2fd; cursor:pointer;">
+      🔹 {{ sp }}
+    </div>
+  {% endfor %}
+</div>
+
+<h2 style="margin-top: 30px;">🤒 Most Common Symptoms</h2>
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+  {% for sy in hospital.symptoms %}
+    <div style="padding:10px 20px; border-radius:12px; background:#ffe0b2; cursor:pointer;">
+      ⚠ {{ sy }}
+    </div>
+  {% endfor %}
+</div>
+
 
   <h2>{{ plan.title }}</h2>
   <ol>
