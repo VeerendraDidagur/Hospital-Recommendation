@@ -21,7 +21,7 @@
     <div class="section">
         <h2>🩺 Most Searched Specialists</h2>
         {% for specialist in hospital.specialists %}
-            <button type="submit" name="specialist" value="{{ specialist }}" class="tag"> {{ specialists }}</button>
+            <span class="tag">{{ specialist }}</span>
         {% endfor %}
     </div>
 
