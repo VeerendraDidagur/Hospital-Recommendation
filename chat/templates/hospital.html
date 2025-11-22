@@ -29,7 +29,7 @@
         <h2>🤒 Most Common Symptoms</h2>
         <form class="symptom-form" action="{{ url_for('doctors', hid=hospital.id) }}" method="POST">
             {% for symptom in hospital.symptoms %}
-                <button type="submit" name="symptom" value="{{ symptom }}" class="tag">⚠ {{ symptom }}</button>
+                <button type="submit" name="symptom" value="{{ symptom }}" class="tag"> {{ symptom }}</button>
             {% endfor %}
         </form>
     </div>
