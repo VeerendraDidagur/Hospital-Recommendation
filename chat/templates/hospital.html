@@ -7,15 +7,7 @@
   <p><strong>Location:</strong> {{ hospital.location }} — {{ hospital.address }}</p>
   <p><strong>Rating:</strong> {{ hospital.rating }}</p>
 
-  <h2>{{ plan.title }}</h2>
-  <ol>
-    {% for s in plan.steps %}
-      <li>
-        <strong>{{ s.label }}</strong>
-        <p>{{ s.desc }}</p>
-      </li>
-    {% endfor %}
-  </ol>
+
 
   <h3>Book an Appointment (Demo)</h3>
   <form action="{{ url_for('book_appointment', hid=hospital.id) }}" method="POST">
