@@ -1,32 +1,39 @@
 <!doctype html>
 <html>
-<head><title>Hospital Finder</title><link rel="stylesheet" href="/static/style.css"></head>
+<head>
+    <title>Hospital Finder</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
 <body>
   <h1>Hospital Recommendation System</h1>
+
   <form action="/" method="POST">
       <input type="text" name="city" placeholder="Enter city name" required>
       <button type="submit">Search</button>
   </form>
-  <h2>Results:</h2>
+
+  <h2>Results{% if city %} for "{{ city }}"{% endif %}:</h2>
   <ul>
-    {% for hospital in results %}
-      <li>
-        <a href="{{ url_for('hospital_detail', hid=hospital.id) }}"><strong>{{ hospital.name }}</strong></a>
-        <br>Location: {{ hospital.location }} — Rating: {{ hospital.rating }}
-      </li>
+    {% if hospitals %}
+        {% for hospital in hospitals %}
+          <li>
+            <a href="{{ url_for('hospital_detail', hid=hospital.id) }}"><strong>{{ hospital.name }}</strong></a>
+            <br>Location: {{ hospital.location }} — Rating: {{ hospital.rating if hospital.rating else 'N/A' }}
+          </li>
+        {% endfor %}
     {% else %}
-      <li>No hospitals found.</li>
-    {% endfor %}
+        {% if city %}<li>No hospitals found in {{ city }}.</li>{% endif %}
+    {% endif %}
   </ul>
+
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       <ul class="flashes">
-      {% for cat, msg in messages %}
-        <li class="{{cat}}">{{msg}}</li>
-      {% endfor %}
+        {% for cat, msg in messages %}
+          <li class="{{cat}}">{{msg}}</li>
+        {% endfor %}
       </ul>
     {% endif %}
   {% endwith %}
 </body>
 </html>
-
