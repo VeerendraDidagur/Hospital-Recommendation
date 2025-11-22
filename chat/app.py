@@ -66,7 +66,9 @@ def book_appointment(hid):
     flash(f"Appointment requested at {h['name']} for {name} on {datetime}. Booking ID: {booking_id}", "success")
     return redirect(url_for("hospital_detail", hid=hid))
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
+
 
 
