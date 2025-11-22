@@ -73,6 +73,8 @@ def home():
 @app.route("/hospital/<hid>")
 def hospital_detail(hid):
     h = next((x for x in hospitals if x["id"] == hid), None)
+    if not h:
+        return "Hospital not found", 404
     return render_template("hospital.html", hospital=h)
 
 @app.route("/choose/<hid>", methods=["GET", "POST"])
@@ -104,6 +106,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
