@@ -9,9 +9,14 @@ app = Flask(__name__)
 app.secret_key = "change_this_secret"  # use env var in prod
 
 # Simple in-memory dataset (replace with DB in production)
-
-
-
+hospitals = [
+    {"id": "1", "name": "City Hospital", "location": "Mumbai", "rating": 4.5, "address":"123 MG Road, Mumbai"},
+    {"id": "2", "name": "Green Valley Hospital", "location": "Delhi", "rating": 4.2, "address":"45 Connaught Place, Delhi"},
+    {"id": "3", "name": "Sunrise Medical Center", "location": "Bangalore", "rating": 4.7, "address":"88 MG Road, Bangalore"},
+    {"id": "5", "name": "H Nanjappa Hospital", "location": "Bangalore", "rating": 4.9, "address":"Malleshwaram, Bangalore"},
+    {"id": "6", "name": "V Care Hospital", "location": "Bangalore", "rating": 4.4, "address":"K R Puram, Bangalore"},
+    {"id": "7", "name": "National Care Hospital", "location": "Hyderabad", "rating": 4.4, "address":"12 Banjara Hills, Hyderabad"},
+]
 
 # Home/search page
 @app.route("/", methods=["GET", "POST"])
@@ -92,6 +97,7 @@ with app.app_context():
     db.session.add(east_point)
     db.session.commit()
     print("Hospital added successfully!")
+
 
 
 
