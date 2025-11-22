@@ -1,122 +1,105 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-import uuid
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
-app.secret_key = "change_this_secret"
 
-# -------------------------
-# Hospital dummy data
-# -------------------------
+# -----------------------------
+# Sample hospital + doctors data
+# -----------------------------
 hospitals = [
     {
         "id": "h1",
         "name": "City Hospital",
-        "location": "Mumbai",
-        "rating": 4.5,
-        "address": "123 MG Road, Mumbai",
-        "specialists": ["Cardiologist", "Neurologist", "Orthopedic", "Dermatologist"],
-        "symptoms": ["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"]
+        "location": "Bangalore",
+        "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
+        "symptoms": ["COVID", "Stomach Pain", "Headache", "Cold and Cough", "Fever", "Constipation"],
+        "doctors": [
+            {
+                "name": "Dr. Rahul Sharma",
+                "specialties": ["Fever", "Cold and Cough", "General Physician"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=12"
+            },
+            {
+                "name": "Dr. Sneha Kapoor",
+                "specialties": ["COVID", "Headache", "Pulmonology"],
+                "experience": 9,
+                "rating": 4.6,
+                "qualification": "MBBS, DM",
+                "image": "https://i.pravatar.cc/150?img=25"
+            }
+        ]
     },
     {
         "id": "h2",
-        "name": "Green Valley Hospital",
-        "location": "Delhi",
-        "rating": 4.2,
-        "address": "45 Connaught Place, Delhi",
-        "specialists": ["Cardiologist", "Urologist", "ENT", "Pediatrician"],
-        "symptoms": ["Fever", "Cough", "Ear Pain", "Abdominal Pain"]
-    },
-    {
-        "id": "h3",
-        "name": "Sunrise Medical Center",
+        "name": "East Point Hospital",
         "location": "Bangalore",
-        "rating": 4.7,
-        "address": "88 MG Road, Bangalore",
-        "specialists": ["Oncologist", "General Physician", "Orthopedic", "Psychiatrist"],
-        "symptoms": ["Fatigue", "Back Pain", "Anxiety", "Neck Pain"]
-    },
-    {
-        "id": "h4",
-        "name": "National Care Hospital",
-        "location": "Hyderabad",
-        "rating": 4.4,
-        "address": "12 Banjara Hills, Hyderabad",
-        "specialists": ["Cardiologist", "Neurologist", "Pulmonologist", "Gastroenterologist"],
-        "symptoms": ["Breathing Issues", "Vomiting", "Dizziness", "Chest Pain"]
+        "specialists": ["Orthopedic", "Dentist", "Cardiologist", "ENT"],
+        "symptoms": ["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"],
+        "doctors": [
+            {
+                "name": "Dr. Ramesh Kumar",
+                "specialties": ["Joint Pain", "Orthopedics"],
+                "experience": 15,
+                "rating": 4.9,
+                "qualification": "MBBS, MS Ortho",
+                "image": "https://i.pravatar.cc/150?img=5"
+            },
+            {
+                "name": "Dr. Neha Varma",
+                "specialties": ["Dentist", "Tooth Pain"],
+                "experience": 7,
+                "rating": 4.5,
+                "qualification": "BDS, MDS",
+                "image": "https://i.pravatar.cc/150?img=32"
+            },
+        ]
     }
 ]
 
-# -------------------------
-# HOME & SEARCH
-# -------------------------
-@app.route("/", methods=["GET", "POST"])
-def index():
-    results = hospitals
-    if request.method == "POST":
-        city = request.form.get("city", "").strip().lower()
-        results = [h for h in hospitals if h["location"].lower() == city]
-    return render_template("index.html", results=results)
+# ---------------------------------
+# ROUTES
+# ---------------------------------
 
-# -------------------------
-# HOSPITAL DETAILS
-# -------------------------
+@app.route("/", methods=["GET", "POST"])
+def home():
+    if request.method == "POST":
+        city = request.form.get("city")
+        results = [h for h in hospitals if city.lower() in h["location"].lower()]
+        return render_template("index.html", hospitals=results, city=city)
+    return render_template("index.html")
+
 @app.route("/hospital/<hid>")
 def hospital_detail(hid):
     h = next((x for x in hospitals if x["id"] == hid), None)
-    if not h:
-        flash("Hospital not found", "error")
-        return redirect(url_for("index"))
     return render_template("hospital.html", hospital=h)
 
-# -------------------------
-# NEW PAGE — SELECT SPECIALIST / SYMPTOM
-# -------------------------
-@app.route("/hospital/<hid>/choose")
-def choose_option(hid):
+@app.route("/choose/<hid>", methods=["GET", "POST"])
+def choose(hid):
     h = next((x for x in hospitals if x["id"] == hid), None)
-    if not h:
-        flash("Hospital not found", "error")
-        return redirect(url_for("index"))
     return render_template("choose.html", hospital=h)
 
-# -------------------------
-# RESULT AFTER SELECTING OPTION
-# -------------------------
-@app.route("/hospital/<hid>/result", methods=["POST"])
-def hospital_result(hid):
+@app.route("/doctors/<hid>", methods=["POST"])
+def doctors(hid):
+    symptom = request.form.get("symptom")
     h = next((x for x in hospitals if x["id"] == hid), None)
-    if not h:
-        flash("Hospital not found", "error")
-        return redirect(url_for("index"))
 
-    selected_specialist = request.form.get("specialist")
-    selected_symptom = request.form.get("symptom")
+    # filter doctors matching selected symptom
+    match = []
+    for d in h["doctors"]:
+        if symptom in d["specialties"]:
+            match.append(d)
 
-    msg = ""
-    if selected_specialist:
-        msg = f"Based on your selection, we recommend booking an appointment with a **{selected_specialist}** specialist."
-    elif selected_symptom:
-        msg = f"Your symptom '{selected_symptom}' is commonly treated here. Doctors are available for further diagnosis."
+    return render_template("doctors.html", hospital=h, doctors=match, symptom=symptom)
 
-    return render_template("result.html", hospital=h, message=msg)
-
-# -------------------------
-# APPOINTMENT BOOKING
-# -------------------------
 @app.route("/hospital/<hid>/book", methods=["POST"])
-def book_appointment(hid):
+def book_doctor(hid):
+    doctor_name = request.form.get("name")
     h = next((x for x in hospitals if x["id"] == hid), None)
-    if not h:
-        flash("Hospital not found", "error")
-        return redirect(url_for("index"))
 
-    name = request.form.get("name", "Anonymous")
-    phone = request.form.get("phone", "")
-    datetime = request.form.get("datetime", "")
-    booking_id = str(uuid.uuid4())[:8]
+    return render_template("success.html", doctor=doctor_name, hospital=h["name"])
 
-    flash(f"Appointment booked at {h['name']} for {name} on {datetime}. Booking ID: {booking_id}", "success")
-    return redirect(url_for("hospital_detail", hid=hid))
     
 @app.route("/hospital/<hid>/choose")
 def choose_category(hid):
@@ -161,5 +144,6 @@ def doctors(hospital_name):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
