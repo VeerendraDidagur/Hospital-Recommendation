@@ -34,24 +34,23 @@ with app.app_context():
 def index():
     results = Hospital.query.all()
 
-        if request.method == 'POST':
-        city = request.form.get('city')
-        if not city or city == "":
-        return render_template("index.html", error="Please enter a city")
+    if request.method == 'POST':
+    city = request.form.get('city')
+    if not city or city == "":
+    return render_template("index.html", error="Please enter a city")
 
-        hospitals = Hospital.query.filter_by(city=city).all()
-        return render_template("index.html", hospitals=hospitals)
+    hospitals = Hospital.query.filter_by(city=city).all()
+    return render_template("index.html", hospitals=hospitals)
 
-    return render_template("index.html")
-        query = Hospital.query
-        if city:
-            query = query.filter(Hospital.city.ilike(city))
-        if specialization:
-            query = query.filter(Hospital.specialization.ilike(f"%{specialization}%"))
-        if max_cost:
-            query = query.filter(Hospital.cost_category <= int(max_cost))
-        if min_rating:
-            query = query.filter(Hospital.rating >= float(min_rating))
+    query = Hospital.query
+    if city:
+        query = query.filter(Hospital.city.ilike(city))
+    if specialization:
+        query = query.filter(Hospital.specialization.ilike(f"%{specialization}%"))
+    if max_cost:
+        query = query.filter(Hospital.cost_category <= int(max_cost))
+    if min_rating:
+        query = query.filter(Hospital.rating >= float(min_rating))
 
         results = query.all()
 
@@ -117,6 +116,7 @@ if __name__ == "__main__":
 with app.app_context():
     db.drop_all()
     db.create_all()
+
 
 
 
