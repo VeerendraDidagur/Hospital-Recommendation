@@ -34,7 +34,7 @@ with app.app_context():
 def index():
     results = Hospital.query.all()
 
-   if request.method == 'POST':
+        if request.method == 'POST':
         city = request.form.get('city')
         if not city or city == "":
         return render_template("index.html", error="Please enter a city")
@@ -117,6 +117,7 @@ if __name__ == "__main__":
 with app.app_context():
     db.drop_all()
     db.create_all()
+
 
 
 
