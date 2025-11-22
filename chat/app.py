@@ -34,12 +34,15 @@ with app.app_context():
 def index():
     results = Hospital.query.all()
 
-    if request.method == "POST":
-        city = request.form.get("city")
-        specialization = request.form.get("specialization")
-        max_cost = request.form.get("cost_category")
-        min_rating = request.form.get("rating")
+   if request.method == 'POST':
+        city = request.form.get('city')
+        if not city or city == "":
+        return render_template("index.html", error="Please enter a city")
 
+        hospitals = Hospital.query.filter_by(city=city).all()
+        return render_template("index.html", hospitals=hospitals)
+
+    return render_template("index.html")
         query = Hospital.query
         if city:
             query = query.filter(Hospital.city.ilike(city))
@@ -114,6 +117,7 @@ if __name__ == "__main__":
 with app.app_context():
     db.drop_all()
     db.create_all()
+
 
 
 
