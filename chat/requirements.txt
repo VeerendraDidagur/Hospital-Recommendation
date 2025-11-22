@@ -1,4 +1,6 @@
-flask
+Flask
+Flask_SQLAlchemy
+psycopg2-binary
 gunicorn
 fastapi
 uvicorn
@@ -7,4 +9,5 @@ psycopg2-binary
 passlib[bcrypt]
 python-jose
 pydantic
+
 
