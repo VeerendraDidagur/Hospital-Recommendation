@@ -17,8 +17,9 @@ class Hospital(db.Model):
     address = db.Column(db.String(200))
     city = db.Column(db.String(100))
     specialization = db.Column(db.String(200))
-    cost_category = db.Column(db.Integer)  # 1=Low,2=Medium,3=High
+    cost_category = db.Column(db.Integer)
     rating = db.Column(db.Float)
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -100,21 +101,19 @@ def book_appointment(hid):
 
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    patient_name = db.Column(db.String(200), nullable=False)
-    phone = db.Column(db.String(50))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    hospital_id = db.Column(db.Integer, db.ForeignKey("hospital.id"), nullable=False)
     datetime = db.Column(db.String(100))
-    hospital_id = db.Column(db.Integer, db.ForeignKey("hospital.id"))
-    status = db.Column(db.String(50), default="Pending")
 
-    hospital = db.relationship("Hospital")
-    appointments = db.relationship("Appointment", backref="hospital", lazy=True)
-
+    user = db.relationship("User", backref="appointments")
+    hospital = db.relationship("Hospital", backref="appointments")
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
 with app.app_context():
     db.create_all()
+
 
 
 
