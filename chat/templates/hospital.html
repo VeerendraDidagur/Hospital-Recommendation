@@ -37,7 +37,14 @@
     <a href="/choose_doctor?speciality=Dermatologist" class="btn">Dermatologist</a>
     <a href="/choose_doctor?speciality=Pediatrician" class="btn">Pediatrician</a>
 </div>
-
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;   /* ⬅ centers horizontally */
+    margin-bottom: 20px;
+}
     <p><a href="{{ url_for('home') }}">← Back to Search</a></p>
 </body>
 </html>
