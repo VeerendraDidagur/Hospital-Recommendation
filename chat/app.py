@@ -133,15 +133,35 @@ def choose_doctor():
 
 @app.route("/hospital/<hid>/book", methods=["POST"])
 def book_doctor(hid):
-    doctor_name = request.form.get("name")
     h = next((x for x in hospitals if x["id"] == hid), None)
 
-    return render_template("success.html", doctor=doctor_name, hospital=h["name"])
+    doctor = {
+        "name": request.form.get("name"),
+        "image": request.form.get("image"),
+        "specialties": request.form.get("specialties"),
+        "experience": request.form.get("experience"),
+        "rating": request.form.get("rating"),
+        "qualification": request.form.get("qualification"),
+    }
+
+    # Sample clinic details (customizable per doctor later)
+    clinic = {
+        "name": h["name"],
+        "fee": 700
+    }
+
+    return render_template(
+        "book_appointment.html",
+        doctor=doctor,
+        clinic=clinic
+    )
+
 # -------------------------
 # RUN
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
