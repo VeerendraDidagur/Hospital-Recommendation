@@ -9,7 +9,7 @@
 
   <form action="/" method="POST">
       <input type="text" name="city" placeholder="Enter city" class="search-bar">
-      <button type="submit">Search</button>
+      <button type="submit" class="search-btn">Search</button>
   </form>
 
   <h2>Results{% if city %} for "{{ city }}"{% endif %}:</h2>
@@ -37,4 +37,5 @@
   {% endwith %}
 </body>
 </html>
+
 
