@@ -46,7 +46,7 @@ hospitals = [
                 "experience": 15,
                 "rating": 4.9,
                 "qualification": "MBBS, MS Ortho",
-                "image": "doctors/dr1.jpg"
+                "image": "VectorStock.com/53211461"
             },
             {
                 "name": "Dr. Neha Varma",
@@ -142,6 +142,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
