@@ -126,6 +126,34 @@
             <button class="slot-btn">3:20 PM</button>
             <button class="slot-btn">7:00 PM</button>
         </div>
+        <br>
+
+<!-- Disabled by default -->
+<button id="confirmBtn" disabled onclick="confirmAppointment()">
+    Confirm Appointment
+</button>
+
+<script>
+    let selectedTime = "";
+
+    function selectSlot(time) {
+        selectedTime = time;
+
+        // highlight selected button
+        let buttons = document.querySelectorAll(".slot");
+        buttons.forEach(btn => btn.style.background = "");
+        event.target.style.background = "#4CAF50";
+        event.target.style.color = "white";
+
+        // enable confirm button
+        document.getElementById("confirmBtn").disabled = false;
+    }
+
+    function confirmAppointment() {
+        // Redirect to success page
+        window.location.href = "success.html";
+    }
+</script>
     </div>
 
 </body>
