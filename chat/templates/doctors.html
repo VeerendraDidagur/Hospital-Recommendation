@@ -81,8 +81,7 @@
 
     {% for d in doctors %}
     <form action="{{ url_for('book_doctor', hid=hospital.id) }}" method="POST" class="doctor-card">
-        <img src="{{ d.image }}" alt="Doctor Photo" class="doctor-photo">
-
+        <img src="{{ url_for('static', filename=doctor.image) }}" class="doctor-img">
         <div class="doctor-details">
             <p><strong>👨‍⚕️ Name:</strong> {{ d.name }}</p>
             <p><strong>🎯 Specialties:</strong> {{ d.specialties | join(', ') }}</p>
