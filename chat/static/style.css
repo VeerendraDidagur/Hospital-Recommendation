@@ -36,6 +36,10 @@ h1 {
 .search-btn:hover {
     background-color: #0056b3;
 }
+.search-container {
+    text-align: center;
+    margin-top: 35px;
+}
 
 
 form {
@@ -102,6 +106,7 @@ li {
 .btn:hover {
     background-color: #0056b3;
 }
+
 
 
 
