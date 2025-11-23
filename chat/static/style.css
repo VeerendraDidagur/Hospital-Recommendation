@@ -27,12 +27,6 @@ h1 {
 .search-btn:hover {
     background-color: #0056b3;
 }
-.search-container {
-    text-align: center;
-    margin-top: 35px;
-}
-
-
 form {
     margin: 20px auto;
 }
@@ -97,22 +91,3 @@ li {
 .btn:hover {
     background-color: #0056b3;
 }
-.hospital-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 25px;
-}
-.hospital-btn {
-    padding: 14px 30px;
-    font-size: 20px;
-    margin: 10px;
-    border-radius: 10px;
-    background: #007bff;
-    color: white;
-    text-decoration: none;
-}
-.hospital-btn:hover {
-    background: #0056b3;
-}
-
