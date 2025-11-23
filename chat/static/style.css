@@ -1,125 +1,82 @@
-/* ---------- GLOBAL ---------- */
 body {
-    margin: 0;
-    padding: 0;
+    background-image: url("/static/images/bg.jpg");  /* your image path */
+    background-size: cover;            /* image covers full screen */
+    background-repeat: no-repeat;      /* no repeat */
+    background-attachment: fixed;      /* stays still when page scrolls */
+    background-position: center;       /* center image */
     font-family: Arial, sans-serif;
-    background-color: #007bff; /* Pure Blue */
-}
-/* ---------- HEADING ---------- */
-h1, h2, h3 {
-    text-align: center;
-    color: #0f172a;
-    margin-bottom: 15px;
+    padding: 20px;
 }
 
-/* ---------- BUTTONS ---------- */
-button, .btn {
-    padding: 10px 18px;
-    border-radius: 8px;
+form {
+    margin: 20px auto;
+}
+
+input {
+    padding: 10px;
+    width: 200px;
+}
+
+button {
+    padding: 10px 20px;
+    background: #4CAF50;
+    align-items: center;
+    color: black;
     border: none;
-    background-color: #3b82f6;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    text-decoration: none;
 }
 
-button:hover, .btn:hover {
-    background-color: #1d4ed8;
+ul {
+    list-style: none;
+    padding: 0;
 }
 
-/* ---------- CENTER GROUP FOR OPTIONS ---------- */
+li {
+    background: white;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+}
+.tag {
+        display: inline-block;
+        padding: 10px 16px;
+        margin: 6px;
+        background: #007bff;             /* bright blue */
+        color: black;                    /* white text for contrast */
+        font-size: 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        border: none;
+        transition: 0.25s;
+    }
+ .tag:hover {
+        background: #0056b3;             /* dark blue on hover */
+        transform: scale(1.08);
+    }
 .button-group {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    align-items: center;
     gap: 12px;
     margin-bottom: 20px;
 }
 
-/* ---------- DOCTOR CARD ---------- */
-.doctor-card {
-    display: flex;
-    gap: 25px;
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin: 18px auto;
-    width: 75%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    align-items: center;
-}
-
-.doctor-photo {
-    width: 210px;
-    height: 158px;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
-.doctor-details p {
-    margin: 6px 0;
-    font-size: 17px;
-}
-
-/* ---------- APPOINTMENT CARD ---------- */
-.card {
-    background: white;
-    margin: 25px auto;
-    padding: 24px;
-    width: 70%;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-
-.title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-/* ---------- DAY BUTTONS (Today / Tomorrow) ---------- */
-.day-btn {
-    padding: 9px 22px;
-    margin: 6px;
-    border-radius: 6px;
-    border: 1px solid #3b82f6;
-    background: white;
-    cursor: pointer;
-}
-
-.day-btn.active {
-    background: #3b82f6;
+.btn {
+    padding: 10px 18px;
+    background-color: #007bff;
     color: white;
-}
-
-/* ---------- TIME SLOT BUTTONS ---------- */
-.slot-btn {
-    padding: 8px 20px;
-    margin: 6px;
-    border-radius: 6px;
-    border: 1px solid #16a34a;
-    background: white;
-    cursor: pointer;
-}
-
-.slot-btn:hover {
-    background: #16a34a;
-    color: white;
-}
-
-/* ---------- CONFIRM BUTTON ---------- */
-#confirmBtn {
-    background: #14b8a6;
-    padding: 10px 25px;
     border-radius: 8px;
-    margin-top: 15px;
-    font-size: 17px;
+    text-decoration: none;
+    font-size: 16px;
 }
 
-#confirmBtn:disabled {
-    background: #9ca3af;
-    cursor: not-allowed;
+.btn:hover {
+    background-color: #0056b3;
 }
+
+
+
+
+
+
 
 
