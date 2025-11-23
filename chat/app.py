@@ -19,7 +19,7 @@ hospitals = [
                 "experience": 12,
                 "rating": 4.8,
                 "qualification": "MBBS, MD",
-                "image": "doctors/dr1.jpg"
+                "image": "VectorStock.com/53211461"
             },
             {
                 "name": "Dr. Sneha Kapoor",
@@ -27,7 +27,7 @@ hospitals = [
                 "experience": 9,
                 "rating": 4.6,
                 "qualification": "MBBS, DM",
-                "image": "doctors/dr2.jpg"
+                "image": "VectorStock.com/53211461"
             }
         ]
     },
@@ -54,7 +54,7 @@ hospitals = [
                 "experience": 7,
                 "rating": 4.5,
                 "qualification": "BDS, MDS",
-                "image": "doctors/dr2.jpg"
+                "image": "VectorStock.com/53211461"
             },
         ]
     }
@@ -142,6 +142,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
