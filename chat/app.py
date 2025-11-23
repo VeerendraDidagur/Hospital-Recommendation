@@ -163,12 +163,16 @@ def book_doctor(hid):
         doctor=doctor,
         clinic=clinic
     )
+@app.route("/success")
+def success():
+    return render_template("success.html")
 
 # -------------------------
 # RUN
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
