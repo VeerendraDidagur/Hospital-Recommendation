@@ -17,6 +17,12 @@ body {
     outline: none;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
+h1 {
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    margin-top: 20px;
+}
 
 
 form {
@@ -83,6 +89,7 @@ li {
 .btn:hover {
     background-color: #0056b3;
 }
+
 
 
 
