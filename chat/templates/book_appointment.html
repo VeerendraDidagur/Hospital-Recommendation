@@ -113,19 +113,19 @@
         <button id="today" class="day-btn active" onclick="showSlots('today')">Today</button>
         <button id="tomorrow" class="day-btn" onclick="showSlots('tomorrow')">Tomorrow</button>
 
-        <div id="slot-today" class="slots">
-            <button class="slot-btn">10:00 AM</button>
-            <button class="slot-btn">12:30 PM</button>
-            <button class="slot-btn">4:00 PM</button>
-            <button class="slot-btn">6:15 PM</button>
-        </div>
+<div id="slot-today" class="slots">
+    <button class="slot-btn" onclick="selectSlot('10:00 AM')">10:00 AM</button>
+    <button class="slot-btn" onclick="selectSlot('12:30 PM')">12:30 PM</button>
+    <button class="slot-btn" onclick="selectSlot('4:00 PM')">4:00 PM</button>
+    <button class="slot-btn" onclick="selectSlot('6:15 PM')">6:15 PM</button>
+</div>
 
-        <div id="slot-tomorrow" class="slots" style="display:none;">
-            <button class="slot-btn">9:30 AM</button>
-            <button class="slot-btn">11:45 AM</button>
-            <button class="slot-btn">3:20 PM</button>
-            <button class="slot-btn">7:00 PM</button>
-        </div>
+<div id="slot-tomorrow" class="slots" style="display:none;">
+    <button class="slot-btn" onclick="selectSlot('9:30 AM')">9:30 AM</button>
+    <button class="slot-btn" onclick="selectSlot('11:45 AM')">11:45 AM</button>
+    <button class="slot-btn" onclick="selectSlot('3:20 PM')">3:20 PM</button>
+    <button class="slot-btn" onclick="selectSlot('7:00 PM')">7:00 PM</button>
+</div>   
         <br>
 
 <!-- Disabled initially -->
