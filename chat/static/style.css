@@ -7,6 +7,17 @@ body {
     font-family: Arial, sans-serif;
     padding: 20px;
 }
+.search-bar {
+    width: 70%;              /* increase width */
+    max-width: 650px;        /* limit for desktop */
+    padding: 16px 22px;      /* increase height */
+    font-size: 20px;         /* bigger text */
+    border: 2px solid #007bff;
+    border-radius: 12px;
+    outline: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
 
 form {
     margin: 20px auto;
@@ -72,6 +83,7 @@ li {
 .btn:hover {
     background-color: #0056b3;
 }
+
 
 
 
