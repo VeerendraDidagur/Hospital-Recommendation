@@ -17,6 +17,7 @@ input {
 button {
     padding: 10px 20px;
     background: #4CAF50;
+    align-items: center;
     color: black;
     border: none;
 }
@@ -51,6 +52,7 @@ li {
 .button-group {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 12px;
     margin-bottom: 20px;
 }
@@ -67,6 +69,7 @@ li {
 .btn:hover {
     background-color: #0056b3;
 }
+
 
 
 
