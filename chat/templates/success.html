@@ -1,35 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Appointment Success</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #e6fff1;
-            text-align: center;
-            padding-top: 100px;
-        }
-        h1 {
-            color: #0a8a43;
-        }
-        a {
-            display: inline-block;
-            margin-top: 30px;
-            background: #0a8a43;
-            color: white;
-            padding: 12px 22px;
-            border-radius: 6px;
-            text-decoration: none;
-        }
-        a:hover {
-            background: #066c34;
-        }
-    </style>
 </head>
-<body>
-    <h1>Appointment booked successfully ✔</h1>
+<body style="text-align:center; font-family:Arial;">
+    <h1>Appointment Booked Successfully ✔️</h1>
+    <p id="appt"></p>
 
-    <a href="/">⬅ Back to Home</a>
+    <a href="index.html">Go Home</a>
+
+    <script>
+        let time = sessionStorage.getItem("appointment_time");
+        document.getElementById("appt").innerText = "Selected Time: " + time;
+    </script>
 </body>
 </html>
