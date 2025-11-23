@@ -7,16 +7,7 @@ body {
     font-family: Arial, sans-serif;
     padding: 20px;
 }
-.search-bar {
-    width: 70%;              /* increase width */
-    max-width: 650px;        /* limit for desktop */
-    padding: 16px 22px;      /* increase height */
-    font-size: 20px;         /* bigger text */
-    border: 2px solid #007bff;
-    border-radius: 12px;
-    outline: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-}
+
 h1 {
     text-align: center;
     font-size: 38px;
@@ -124,3 +115,4 @@ li {
 .hospital-btn:hover {
     background: #0056b3;
 }
+
