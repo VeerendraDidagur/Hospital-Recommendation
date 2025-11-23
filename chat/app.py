@@ -19,7 +19,7 @@ hospitals = [
                 "experience": 12,
                 "rating": 4.8,
                 "qualification": "MBBS, MD",
-                "image": "https://i.pravatar.cc/150?img=12"
+                "image": "doctors/dr1.jpg"
             },
             {
                 "name": "Dr. Sneha Kapoor",
@@ -46,7 +46,7 @@ hospitals = [
                 "experience": 15,
                 "rating": 4.9,
                 "qualification": "MBBS, MS Ortho",
-                "image": "https://i.pravatar.cc/150?img=5"
+                "image": "doctors/dr1.jpg"
             },
             {
                 "name": "Dr. Neha Varma",
@@ -142,6 +142,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
