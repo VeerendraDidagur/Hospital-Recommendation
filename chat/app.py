@@ -27,7 +27,7 @@ hospitals = [
                 "experience": 9,
                 "rating": 4.6,
                 "qualification": "MBBS, DM",
-                "image": "https://i.pravatar.cc/150?img=25"
+                "image": "doctors/dr2.jpg"
             }
         ]
     },
@@ -54,7 +54,7 @@ hospitals = [
                 "experience": 7,
                 "rating": 4.5,
                 "qualification": "BDS, MDS",
-                "image": "https://i.pravatar.cc/150?img=32"
+                "image": "doctors/dr2.jpg"
             },
         ]
     }
@@ -142,6 +142,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
