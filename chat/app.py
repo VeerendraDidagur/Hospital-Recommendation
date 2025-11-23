@@ -84,35 +84,52 @@ def choose(hid):
     h = next((x for x in hospitals if x["id"] == hid), None)
     return render_template("choose.html", hospital=h)
 
-@app.route("/doctors/<hid>", methods=["POST"])
-def doctors(hid):
-    symptom = request.form.get("symptom")
+@app.route('/choose_symptom')
+def choose_symptom():
+    symptom = request.args.get('symptom')
+    hid = request.args.get('hid')
+
+    # Find hospital by ID
     h = next((x for x in hospitals if x["id"] == hid), None)
+    if not h:
+        return "Hospital not found", 404
 
-    # filter doctors matching selected symptom
-    match = []
+    # Filter doctors based on symptom → doctor.specialties list
+    matched_doctors = []
     for d in h["doctors"]:
-        if symptom in d["specialties"]:
-            match.append(d)
+        if any(symptom.lower() in s.lower() for s in d["specialties"]):
+            matched_doctors.append(d)
 
-    return render_template("doctors.html", hospital=h, doctors=match, symptom=symptom)
+    return render_template(
+        "doctors.html",
+        hospital=h,
+        doctors=matched_doctors,
+        speciality=symptom    # same variable used in doctors.html
+    )
 
 @app.route('/choose_doctor')
 def choose_doctor():
     speciality = request.args.get('speciality')
-    hospital_id = request.args.get('hid')  # if you passed hospital id
+    hid = request.args.get('hid')
 
-    # filter doctors based on specialization
-    matched_doctors = [d for d in doctors if speciality.lower() in d['specialization'].lower()]
+    # find hospital by ID
+    h = next((x for x in hospitals if x["id"] == hid), None)
 
-    # even if no doctors match, we still return a template
+    if not h:
+        return "Hospital not found", 404
+
+    # filter doctors within that hospital
+    matched_doctors = []
+    for d in h["doctors"]:
+        if any(speciality.lower() in sp.lower() for sp in d["specialties"]):
+            matched_doctors.append(d)
+
     return render_template(
         "doctors.html",
+        hospital=h,
         doctors=matched_doctors,
         speciality=speciality
     )
-
-
 
 @app.route("/hospital/<hid>/book", methods=["POST"])
 def book_doctor(hid):
@@ -125,6 +142,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
