@@ -6,12 +6,15 @@
 </head>
 <body>
 <style>
+<style>
 body {
-    background-image: url("/static/images/bg.jpg");
+    background-image: url("{{ url_for('static', filename='images/bg.jpg.jpg') }}");
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center;
+    background-repeat: no-repeat;
 }
+</style>
+
 </style>
   <h1>Hospital Recommendation System</h1>
 
@@ -48,6 +51,7 @@ body {
 
 </body>
 </html>
+
 
 
 
