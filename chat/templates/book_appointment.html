@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Appointment - {{ doctor.name }}</title>
+    <style>
+        body { background:#f8f9fa; font-family: Arial, sans-serif; padding:20px; }
+
+        .top-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .doctor-img {
+            border-radius: 12px;
+            width: 230px;
+            height: 170px;
+            object-fit: cover;
+        }
+
+        .doctor-info {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        /* Booking card */
+        .card {
+            background:white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            width: 70%;
+            margin: auto;
+        }
+
+        .title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .clinic {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        /* Today / Tomorrow */
+        .day-btn {
+            padding: 8px 20px;
+            margin: 5px;
+            border-radius: 6px;
+            border: 1px solid #007bff;
+            background: white;
+            cursor: pointer;
+        }
+
+        .day-btn.active {
+            background: #007bff;
+            color: white;
+        }
+
+        .slots {
+            margin-top: 15px;
+        }
+
+        .slot-btn {
+            padding: 8px 18px;
+            margin: 5px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #28a745;
+            cursor: pointer;
+        }
+
+        .slot-btn:hover {
+            background:#28a745;
+            color:white;
+        }
+    </style>
+
+    <script>
+        function showSlots(day) {
+            document.getElementById("today").classList.remove("active");
+            document.getElementById("tomorrow").classList.remove("active");
+            document.getElementById(day).classList.add("active");
+
+            document.getElementById("slot-today").style.display = day === "today" ? "block" : "none";
+            document.getElementById("slot-tomorrow").style.display = day === "tomorrow" ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+
+    <div class="top-section">
+        <img src="{{ doctor.image }}" class="doctor-img">
+        <div class="doctor-info">
+            <b>{{ doctor.name }}</b><br>
+            {{ doctor.specialties }} <br>
+            {{ doctor.experience }} years • ⭐ {{ doctor.rating }} <br>
+            {{ doctor.qualification }}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="title">Book Clinic Visit</div>
+
+        <div class="clinic">
+            <span><b>Clinic:</b> {{ clinic.name }}</span>
+            <span><b>Fee:</b> ₹{{ clinic.fee }}</span>
+        </div>
+
+        <button id="today" class="day-btn active" onclick="showSlots('today')">Today</button>
+        <button id="tomorrow" class="day-btn" onclick="showSlots('tomorrow')">Tomorrow</button>
+
+        <div id="slot-today" class="slots">
+            <button class="slot-btn">10:00 AM</button>
+            <button class="slot-btn">12:30 PM</button>
+            <button class="slot-btn">4:00 PM</button>
+            <button class="slot-btn">6:15 PM</button>
+        </div>
+
+        <div id="slot-tomorrow" class="slots" style="display:none;">
+            <button class="slot-btn">9:30 AM</button>
+            <button class="slot-btn">11:45 AM</button>
+            <button class="slot-btn">3:20 PM</button>
+            <button class="slot-btn">7:00 PM</button>
+        </div>
+    </div>
+
+</body>
+</html>
