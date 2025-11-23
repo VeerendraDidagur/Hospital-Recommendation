@@ -49,6 +49,14 @@ hospitals = [
                 "image": "https://i.pravatar.cc/150?img=65"
             },
             {
+                "name": "Dr. Mayank Patil",
+                "specialties": ["Fever", "Dentist", "General Physician"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+            {
                 "name": "Dr. Neha Varma",
                 "specialties": ["Dentist", "Tooth Pain"],
                 "experience": 7,
