@@ -19,7 +19,7 @@ hospitals = [
                 "experience": 12,
                 "rating": 4.8,
                 "qualification": "MBBS, MD",
-                "image": "https://image.shutterstock.com/image-vector/doctor-logo-design-white-background-2548665401.jpg"
+                "image": "https://i.pravatar.cc/150?img=68"
             },
             {
                 "name": "Dr. Sneha Kapoor",
@@ -27,7 +27,7 @@ hospitals = [
                 "experience": 9,
                 "rating": 4.6,
                 "qualification": "MBBS, DM",
-                "image": "https://share.google/images/mEYl0mgk8sxJUhSJs"
+                "image": "https://i.pravatar.cc/150?img=32"
             }
         ]
     },
@@ -46,7 +46,7 @@ hospitals = [
                 "experience": 15,
                 "rating": 4.9,
                 "qualification": "MBBS, MS Ortho",
-                "image": "https://image.shutterstock.com/image-vector/doctor-logo-design-white-background-2548665401.jpg"
+                "image": "https://i.pravatar.cc/150?img=65"
             },
             {
                 "name": "Dr. Neha Varma",
@@ -54,7 +54,7 @@ hospitals = [
                 "experience": 7,
                 "rating": 4.5,
                 "qualification": "BDS, MDS",
-                "image": "https://share.google/images/mEYl0mgk8sxJUhSJs"
+                "image": "https://i.pravatar.cc/150?img=5"
             },
         ]
     }
@@ -142,6 +142,7 @@ def book_doctor(hid):
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
