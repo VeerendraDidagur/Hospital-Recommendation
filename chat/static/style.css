@@ -1,9 +1,9 @@
 /* ---------- GLOBAL ---------- */
 body {
     margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(180deg, #dbeafe 0%, #60a5fa 35%, #1d4ed8 100%);
-    color: #1e293b;
+    background-color: #007bff; /* Pure Blue */
 }
 /* ---------- HEADING ---------- */
 h1, h2, h3 {
@@ -121,4 +121,5 @@ button:hover, .btn:hover {
     background: #9ca3af;
     cursor: not-allowed;
 }
+
 
