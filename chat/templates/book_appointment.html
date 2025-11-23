@@ -128,7 +128,7 @@
         </div>
         <br>
 
-<!-- Disabled by default -->
+<!-- Disabled initially -->
 <button id="confirmBtn" disabled onclick="confirmAppointment()">
     Confirm Appointment
 </button>
@@ -139,7 +139,7 @@
     function selectSlot(time) {
         selectedTime = time;
 
-        // highlight selected button
+        // highlight selected slot
         let buttons = document.querySelectorAll(".slot");
         buttons.forEach(btn => btn.style.background = "");
         event.target.style.background = "#4CAF50";
@@ -147,13 +147,16 @@
 
         // enable confirm button
         document.getElementById("confirmBtn").disabled = false;
+
+        // store the selected time so success.html can display it
+        sessionStorage.setItem("appointment_time", time);
     }
 
     function confirmAppointment() {
-        // Redirect to success page
-        window.location.href = "success.html";
+        window.location.href = "success.html"; // go to success page
     }
 </script>
+   
     </div>
 
 </body>
