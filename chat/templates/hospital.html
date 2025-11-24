@@ -85,7 +85,7 @@
         <a href="/choose_doctor?speciality=Fever" class="btn">Fever</a>
         <a href="/choose_doctor?speciality=Back Pain" class="btn">Back Pain</a>
         {% for sym in hospital.symptoms %}
-            <a class="btn" href="{{ url_for('choose_doctor', speciality=sym, hid=hospital.id) }}">{{ sym }}</a>
+           <a class="btn" href="{{ url_for('choose_doctor', speciality=sym) }}">{{ sym }}</a>
         {% endfor %}
     </div>
 
@@ -99,7 +99,7 @@
         <a href="/choose_doctor?speciality=Dermatologist" class="btn">Dermatologist</a>
         <a href="/choose_doctor?speciality=Pediatrician" class="btn">Pediatrician</a>
         {% for sp in hospital.specialists %}
-            <a class="btn" href="{{ url_for('choose_doctor', speciality=sp, hid=hospital.id) }}">{{ sp }}</a>
+           <a class="btn" href="{{ url_for('choose_doctor', speciality=sp) }}">{{ sp }}</a>
         {% endfor %}
     </div>
 
