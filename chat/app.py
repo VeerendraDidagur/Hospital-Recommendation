@@ -34,7 +34,7 @@ hospitals = [
     {
         "id": "h2",
         "name": "East Point Hospital",
-        "location": "Bangalore",
+        "location": "East Point Campus, Virgo nagar post, Jnana Prabha, Avalahalli, Cheemasandra, Bengaluru, Karnataka 560049",
         "address": "3P93+M3 Bengaluru,Karnataka",
         "rating": 4.5,
         "specialists": ["Orthopedic", "Dentist", "Cardiologist", "ENT"],
@@ -172,6 +172,7 @@ def success():
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
