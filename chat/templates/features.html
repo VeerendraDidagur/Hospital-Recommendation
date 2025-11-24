@@ -27,7 +27,30 @@
             font-size:18px;
             box-shadow:0 4px 10px rgba(0,0,0,0.1);
             text-align:left;
+            position: relative;
         }
+
+        .book-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align:right;
+        }
+
+        .book-box input {
+            width: 80px;
+            padding: 6px;
+            font-size: 15px;
+            margin-right: 6px;
+        }
+
+        .success-msg {
+            margin-top:10px;
+            font-size: 18px;
+            color: green;
+            font-weight: bold;
+        }
+
         .back { margin-top:25px; display:block; }
     </style>
 </head>
@@ -44,35 +67,72 @@
 
 <!-- BLOOD -->
 <div id="blood" class="card">
+    <div class="book-box">
+        <input type="number" id="blood_units" min="1" placeholder="Qty">
+        <button onclick="book('Blood Availability', 'blood_units')" class="btn-f">Book</button>
+    </div>
+
     <b>Blood Groups Available:</b> {{ hospital.features.blood.groups }} <br><br>
     <b>Units Available:</b> {{ hospital.features.blood.units }} <br><br>
     <b>Emergency Contact:</b> {{ hospital.features.blood.emergency_contact }}
+    <p id="success_blood" class="success-msg" style="display:none;"></p>
 </div>
 
 <!-- ORGAN -->
 <div id="organ" class="card">
+    <div class="book-box">
+        <input type="number" id="organ_units" min="1" placeholder="Qty">
+        <button onclick="book('Organ Availability', 'organ_units')" class="btn-f">Book</button>
+    </div>
+
     <b>Organs Available:</b> {{ hospital.features.organ.organs_available }} <br><br>
     <b>Waiting List:</b> {{ hospital.features.organ.waiting_list }} <br><br>
     <b>Specialist Contact:</b> {{ hospital.features.organ.contact }}
+    <p id="success_organ" class="success-msg" style="display:none;"></p>
 </div>
 
 <!-- ICU -->
 <div id="icu" class="card">
+    <div class="book-box">
+        <input type="number" id="icu_units" min="1" placeholder="Qty">
+        <button onclick="book('ICU / Ventilator Service', 'icu_units')" class="btn-f">Book</button>
+    </div>
+
     <b>ICU Beds Vacant:</b> {{ hospital.features.icu.icu_vacant }} <br><br>
     <b>Normal Beds Vacant:</b> {{ hospital.features.icu.normal_beds }} <br><br>
     <b>Ventilators Available:</b> {{ hospital.features.icu.ventilators }}
+    <p id="success_icu" class="success-msg" style="display:none;"></p>
 </div>
 
 <!-- EMERGENCY -->
 <div id="emergency" class="card">
+    <div class="book-box">
+        <input type="number" id="emergency_units" min="1" placeholder="Qty">
+        <button onclick="book('Emergency Service', 'emergency_units')" class="btn-f">Book</button>
+    </div>
+
     <b>Ambulances Available (24×7):</b> {{ hospital.features.emergency.ambulance_24x7 }} <br><br>
     <b>Estimated Waiting Time:</b> {{ hospital.features.emergency.waiting_time }}
+    <p id="success_emergency" class="success-msg" style="display:none;"></p>
 </div>
 
 <script>
 function showCard(id) {
     document.querySelectorAll(".card").forEach(c => c.style.display = "none");
     document.getElementById(id).style.display = "block";
+}
+
+function book(service, inputId) {
+    let qty = document.getElementById(inputId).value;
+    if (!qty || qty <= 0) {
+        alert("Please enter a valid quantity");
+        return;
+    }
+
+    let msgId = "success_" + inputId.split("_")[0];
+    let msgBox = document.getElementById(msgId);
+    msgBox.innerHTML = `${service} – ${qty} units booked successfully!`;
+    msgBox.style.display = "block";
 }
 </script>
 
