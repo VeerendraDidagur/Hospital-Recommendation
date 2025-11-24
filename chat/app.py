@@ -114,7 +114,7 @@ hospitals = [
         "id": "h3",
         "name": "M S Ramaiah Hospital",
         "location": "New BEL Rd, M S Ramaiah Nagar, MSRIT Post, Bengaluru, Karnataka 560054",
-        "address": "MSR Hospital Rd, Bengaluru, Karnataka",
+        "address": "2HH9+8W Bengaluru, Karnataka",
         "rating": 4.7,
         "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
         "symptoms": ["COVID", "Stomach Pain", "Headache", "Cold and Cough", "Fever", "Constipation"],
@@ -170,7 +170,7 @@ hospitals = [
         "id": "h4",
         "name": "Aster CMI Hospital",
         "location": "43/2, NH 7, New Airport Road, Sahakar Nagar, Sanjeevini Nagar, Bengaluru, Karnataka 560092",
-        "address": "Bengaluru",
+        "address": "3H3R+QJ Bengaluru, Karnataka",
         "rating": 4.5,
         "specialists": ["Orthopedic", "Dentist", "Cardiologist", "ENT"],
         "symptoms": ["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"],
@@ -219,6 +219,62 @@ hospitals = [
             "emergency": {
                 "ambulance_24x7": 2,
                 "waiting_time": "20 minutes"
+            }
+        }
+    },
+    {
+        "id": "h5",
+        "name": "Bangalore Baptist Hospital",
+        "location": "Bellary Rd, Vinayakanagar, Hebbal, Bengaluru, Karnataka 560032",
+        "address": "2HPQ+6R Bengaluru, Karnataka",
+        "rating": 4.7,
+        "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
+        "symptoms": ["COVID", "Stomach Pain", "Headache", "Cold and Cough", "Fever", "Constipation"],
+        "doctors": [
+             {
+                "name": "Dr. Shreyas",
+                "specialties": ["Fever", "Cold and Cough", "General Physician"],
+                "experience": 15,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+             {
+                "name": "Dr. Sushant Patil",
+                "specialties": ["Dentist", "Tooth Pain"],
+                "experience": 22,
+                "rating": 4.6,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+             {
+                "name": "Dr. Raghavendra Hosalli",
+                "specialties": ["Joint Pain", "Orthopedics"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+        ],
+        "features": {
+            "blood": {
+                "groups": ["B+", "O+", "AB+"],
+                "units": {"B+": 5, "O+": 10, "AB+": 1},
+                "emergency_contact": "+91 90000 11111"
+            },
+            "organ": {
+                "organs_available": ["Kidney", "Liver"],
+                "waiting_list": "3 Kidney, 1 Heart",
+                "contact": "+91 90000 22222"
+            },
+            "icu": {
+                "icu_vacant": 3,
+                "normal_beds": 8,
+                "ventilators": 2
+            },
+            "emergency": {
+                "ambulance_24x7": 4,
+                "waiting_time": "10 minutes"
             }
         }
     },
@@ -308,6 +364,7 @@ def success():
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
