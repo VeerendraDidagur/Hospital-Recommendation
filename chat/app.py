@@ -1,82 +1,98 @@
 from flask import Flask, render_template, request, redirect, url_for
-import requests
-import os
-app = Flask(__name__)
 
-RENDER_API_URL = "https://your-render-api.onrender.com/hospitals"
+app = Flask(_name_)
 
+# -----------------------------
+# Sample hospital + doctors data
+# -----------------------------
+hospitals = [
+    {
+        "id": "h1",
+        "name": "City Hospital",
+        "location": "Bangalore",
+        "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
+        "symptoms": ["COVID", "Stomach Pain", "Headache", "Cold and Cough", "Fever", "Constipation"],
+        "doctors": [
+            {
+                "name": "Dr. Rahul Sharma",
+                "specialties": ["Fever", "Cold and Cough", "General Physician"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+            {
+                "name": "Dr. Sneha Kapoor",
+                "specialties": ["COVID", "Headache", "Pulmonology"],
+                "experience": 9,
+                "rating": 4.6,
+                "qualification": "MBBS, DM",
+                "image": "https://i.pravatar.cc/150?img=32"
+            }
+        ]
+    },
+    {
+        "id": "h2",
+        "name": "East Point Hospital",
+        "location": "East Point Hospital, Virgo nagar post, Jnana Prabha, Avalahalli, Cheemasandra, Bengaluru, Karnataka 560049",
+        "address": "3P39+M3 Bengaluru, Karnataka",
+        "rating": 4.5,
+        "specialists": ["Orthopedic", "Dentist", "Cardiologist", "ENT"],
+        "symptoms": ["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"],
+        "doctors": [
+            {
+                "name": "Dr. Ramesh Kumar",
+                "specialties": ["Joint Pain", "Orthopedics"],
+                "experience": 15,
+                "rating": 4.9,
+                "qualification": "MBBS, MS Ortho",
+                "image": "https://i.pravatar.cc/150?img=65"
+            },
+            {
+                "name": "Dr. Mayank Patil",
+                "specialties": ["Fever", "Dentist", "General Physician"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+            {
+                "name": "Dr. Neha Varma",
+                "specialties": ["Dentist", "Tooth Pain"],
+                "experience": 7,
+                "rating": 4.5,
+                "qualification": "BDS, MDS",
+                "image": "https://i.pravatar.cc/150?img=5"
+            },
+        ]
+    }
+    {
+        "id": "h3",
+        "name": "M S Ramaiah Hospital",
+        "location": "Bangalore",
+        "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
+        "symptoms": ["COVID", "Stomach Pain", "Headache", "Cold and Cough", "Fever", "Constipation"],
+        "doctors": [
+            {
+                "name": "Dr. Rahul Sharma",
+                "specialties": ["Fever", "Cold and Cough", "General Physician"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+            {
+                "name": "Dr. Sneha Kapoor",
+                "specialties": ["COVID", "Headache", "Pulmonology"],
+                "experience": 9,
+                "rating": 4.6,
+                "qualification": "MBBS, DM",
+                "image": "https://i.pravatar.cc/150?img=32"
+            }
+        ]
+    },
+]
 
-# ---------------------------------
-# Home Route
-# ---------------------------------
-@app.route("/")
-
-
-# ---------------------------------
-# Load hospitals + doctors from Render API
-# ---------------------------------
-@app.route("/book_appointment", methods=["GET"])
-def book_appointment():
-    try:
-        params = {"city": "bangalore"}
-
-        # Fetch data from render cloud backend
-        response = requests.get(RENDER_API_URL, params=params, timeout=10)
-        response.raise_for_status()
-
-        hospitals = response.json()   # list of hospitals with doctors inside
-
-    except Exception as e:
-        print("Error fetching data:", e)
-        hospitals = []
-
-    return render_template("book_appointment.html", hospitals=hospitals)
-
-
-# ---------------------------------
-# After user picks hospital → load doctors dropdown
-# ---------------------------------
-@app.route("/get_doctors", methods=["POST"])
-def get_doctors():
-    hospital_id = request.form.get("hospital_id")
-
-    # Call Render API again to get doctors for selected hospital
-    try:
-        response = requests.get(f"{RENDER_API_URL}/{hospital_id}")
-        response.raise_for_status()
-        hospital_data = response.json()
-
-        doctors = hospital_data.get("doctors", [])
-
-    except:
-        doctors = []
-
-    return render_template("select_doctor.html", doctors=doctors, hospital_id=hospital_id)
-
-
-# ---------------------------------
-# After selecting doctor + slot
-# ---------------------------------
-@app.route("/confirm_appointment", methods=["POST"])
-def confirm_appointment():
-    hospital_id = request.form.get("hospital_id")
-    doctor_id = request.form.get("doctor_id")
-    timeslot = request.form.get("timeslot")
-
-    # You can store this in database later. For now show in success page.
-    return render_template(
-        "success.html",
-        hospital_id=hospital_id,
-        doctor_id=doctor_id,
-        timeslot=timeslot
-    )
-
-
-# ---------------------------------
-# Run server
-# ---------------------------------
-if __name__ == "__main__":
-    app.run(debug=True)
 # ---------------------------------
 # ROUTES
 # ---------------------------------
@@ -181,37 +197,5 @@ def success():
 # -------------------------
 # RUN
 # -------------------------
-import os
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if _name_ == "_main_":
+    app.run(host="0.0.0.0", port=10000)
