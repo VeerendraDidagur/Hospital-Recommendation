@@ -19,36 +19,47 @@
 
         .card {
             display:none;
-            width: 65%;
+            width: 75%;
             margin: 20px auto;
             background:white;
             border-radius:10px;
-            padding:20px;
+            padding:25px;
             font-size:18px;
             box-shadow:0 4px 10px rgba(0,0,0,0.1);
             text-align:left;
-            position: relative;
         }
 
-        .book-box {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            text-align:right;
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .row input {
+            width: 45%;
+            padding: 8px;
+            font-size: 16px;
         }
 
-        .book-box input {
-            width: 80px;
-            padding: 6px;
-            font-size: 15px;
-            margin-right: 6px;
+        .book-btn {
+            background: #28a745;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
         }
+        .book-btn:hover { background:#1e7e34; }
 
-        .success-msg {
-            margin-top:10px;
+        .success {
+            margin-top: 14px;
+            padding: 10px;
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            color: #155724;
             font-size: 18px;
-            color: green;
-            font-weight: bold;
+            border-radius: 6px;
         }
 
         .back { margin-top:25px; display:block; }
@@ -67,53 +78,64 @@
 
 <!-- BLOOD -->
 <div id="blood" class="card">
-    <div class="book-box">
-        <input type="number" id="blood_units" min="1" placeholder="Qty">
-        <button onclick="book('Blood Availability', 'blood_units')" class="btn-f">Book</button>
+    <b>Blood Groups Available:</b> {{ hospital.features.blood.groups }} <br><br>
+
+    <div class="row">
+        <label>Blood Group:</label>
+        <input type="text" id="bloodGroup">
+    </div>
+    <div class="row">
+        <label>Quantity (Units):</label>
+        <input type="number" id="bloodQty">
     </div>
 
-    <b>Blood Groups Available:</b> {{ hospital.features.blood.groups }} <br><br>
-    <b>Units Available:</b> {{ hospital.features.blood.units }} <br><br>
-    <b>Emergency Contact:</b> {{ hospital.features.blood.emergency_contact }}
-    <p id="success_blood" class="success-msg" style="display:none;"></p>
+    <button class="book-btn" onclick="book('blood')">Book</button>
+    <div id="bloodSuccess" class="success" style="display:none;"></div>
 </div>
 
 <!-- ORGAN -->
 <div id="organ" class="card">
-    <div class="book-box">
-        <input type="number" id="organ_units" min="1" placeholder="Qty">
-        <button onclick="book('Organ Availability', 'organ_units')" class="btn-f">Book</button>
+    <b>Organs Available:</b> {{ hospital.features.organ.organs_available }} <br><br>
+
+    <div class="row">
+        <label>Organ:</label>
+        <input type="text" id="organType">
+    </div>
+    <div class="row">
+        <label>Number:</label>
+        <input type="number" id="organQty">
     </div>
 
-    <b>Organs Available:</b> {{ hospital.features.organ.organs_available }} <br><br>
-    <b>Waiting List:</b> {{ hospital.features.organ.waiting_list }} <br><br>
-    <b>Specialist Contact:</b> {{ hospital.features.organ.contact }}
-    <p id="success_organ" class="success-msg" style="display:none;"></p>
+    <button class="book-btn" onclick="book('organ')">Book</button>
+    <div id="organSuccess" class="success" style="display:none;"></div>
 </div>
 
 <!-- ICU -->
 <div id="icu" class="card">
-    <div class="book-box">
-        <input type="number" id="icu_units" min="1" placeholder="Qty">
-        <button onclick="book('ICU / Ventilator Service', 'icu_units')" class="btn-f">Book</button>
+    <b>ICU Beds Vacant:</b> {{ hospital.features.icu.icu_vacant }} <br>
+    <b>Normal Beds Vacant:</b> {{ hospital.features.icu.normal_beds }} <br>
+    <b>Ventilators Available:</b> {{ hospital.features.icu.ventilators }} <br><br>
+
+    <div class="row">
+        <label>Type (ICU / Normal Bed / Ventilator):</label>
+        <input type="text" id="icuType">
+    </div>
+    <div class="row">
+        <label>Number:</label>
+        <input type="number" id="icuQty">
     </div>
 
-    <b>ICU Beds Vacant:</b> {{ hospital.features.icu.icu_vacant }} <br><br>
-    <b>Normal Beds Vacant:</b> {{ hospital.features.icu.normal_beds }} <br><br>
-    <b>Ventilators Available:</b> {{ hospital.features.icu.ventilators }}
-    <p id="success_icu" class="success-msg" style="display:none;"></p>
+    <button class="book-btn" onclick="book('icu')">Book</button>
+    <div id="icuSuccess" class="success" style="display:none;"></div>
 </div>
 
 <!-- EMERGENCY -->
 <div id="emergency" class="card">
-    <div class="book-box">
-        <input type="number" id="emergency_units" min="1" placeholder="Qty">
-        <button onclick="book('Emergency Service', 'emergency_units')" class="btn-f">Book</button>
-    </div>
+    <b>Ambulances Available (24×7):</b> {{ hospital.features.emergency.ambulance_24x7 }} <br>
+    <b>Estimated Waiting Time:</b> {{ hospital.features.emergency.waiting_time }} <br><br>
 
-    <b>Ambulances Available (24×7):</b> {{ hospital.features.emergency.ambulance_24x7 }} <br><br>
-    <b>Estimated Waiting Time:</b> {{ hospital.features.emergency.waiting_time }}
-    <p id="success_emergency" class="success-msg" style="display:none;"></p>
+    <button class="book-btn" onclick="book('emergency')">Book</button>
+    <div id="emergencySuccess" class="success" style="display:none;"></div>
 </div>
 
 <script>
@@ -122,17 +144,30 @@ function showCard(id) {
     document.getElementById(id).style.display = "block";
 }
 
-function book(service, inputId) {
-    let qty = document.getElementById(inputId).value;
-    if (!qty || qty <= 0) {
-        alert("Please enter a valid quantity");
-        return;
+function book(type) {
+    let msg = "";
+    if (type === "blood") {
+        msg = "Blood Group " + document.getElementById("bloodGroup").value +
+              " - " + document.getElementById("bloodQty").value + " Units booked successfully!";
+        document.getElementById("bloodSuccess").innerText = msg;
+        document.getElementById("bloodSuccess").style.display = "block";
     }
-
-    let msgId = "success_" + inputId.split("_")[0];
-    let msgBox = document.getElementById(msgId);
-    msgBox.innerHTML = `${service} – ${qty} units booked successfully!`;
-    msgBox.style.display = "block";
+    if (type === "organ") {
+        msg = document.getElementById("organQty").value + " " +
+              document.getElementById("organType").value + "(s) booked successfully!";
+        document.getElementById("organSuccess").innerText = msg;
+        document.getElementById("organSuccess").style.display = "block";
+    }
+    if (type === "icu") {
+        msg = document.getElementById("icuQty").value + " " +
+              document.getElementById("icuType").value + " booked successfully!";
+        document.getElementById("icuSuccess").innerText = msg;
+        document.getElementById("icuSuccess").style.display = "block";
+    }
+    if (type === "emergency") {
+        document.getElementById("emergencySuccess").innerText = "Emergency service booked successfully!";
+        document.getElementById("emergencySuccess").style.display = "block";
+    }
 }
 </script>
 
