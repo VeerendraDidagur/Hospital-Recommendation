@@ -65,7 +65,7 @@ hospitals = [
                 "image": "https://i.pravatar.cc/150?img=5"
             },
         ]
-    }
+    },
     {
         "id": "h3",
         "name": "M S Ramaiah Hospital",
@@ -199,3 +199,4 @@ def success():
 # -------------------------
 if _name_ == "_main_":
     app.run(host="0.0.0.0", port=10000)
+
