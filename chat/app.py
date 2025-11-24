@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # -----------------------------
 # Sample hospital + doctors data
@@ -197,6 +197,7 @@ def success():
 # -------------------------
 # RUN
 # -------------------------
-if _name_ == "_main_":
+if __name__ == "_main_":
     app.run(host="0.0.0.0", port=10000)
+
 
