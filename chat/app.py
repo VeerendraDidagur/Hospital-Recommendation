@@ -166,6 +166,62 @@ hospitals = [
             }
         }
     },
+     {
+        "id": "h2",
+        "name": "East Point Hospital",
+        "location": "East Point Hospital, Cheemasandra, Bengaluru",
+        "address": "3P39+M3 Bengaluru, Karnataka 560049",
+        "rating": 4.5,
+        "specialists": ["Orthopedic", "Dentist", "Cardiologist", "ENT"],
+        "symptoms": ["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"],
+        "doctors": [
+            {
+                "name": "Dr. Ramesh Kumar",
+                "specialties": ["Joint Pain", "Orthopedics"],
+                "experience": 15,
+                "rating": 4.9,
+                "qualification": "MBBS, MS Ortho",
+                "image": "https://i.pravatar.cc/150?img=65"
+            },
+            {
+                "name": "Dr. Mayank Patil",
+                "specialties": ["Fever", "Dentist", "General Physician"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+            {
+                "name": "Dr. Neha Varma",
+                "specialties": ["Dentist", "Tooth Pain"],
+                "experience": 7,
+                "rating": 4.5,
+                "qualification": "BDS, MDS",
+                "image": "https://i.pravatar.cc/150?img=5"
+            },
+        ],
+        "features": {
+            "blood": {
+                "groups": ["A+", "A-", "O+", "O-"],
+                "units": {"A+": 8, "A-": 3, "O+": 20, "O-": 7},
+                "emergency_contact": "+91 99876 54321"
+            },
+            "organ": {
+                "organs_available": ["Kidney", "Liver", "Eyes"],
+                "waiting_list": "2 Kidney, 0 Hearts",
+                "contact": "+91 90123 45678"
+            },
+            "icu": {
+                "icu_vacant": 5,
+                "normal_beds": 6,
+                "ventilators": 4
+            },
+            "emergency": {
+                "ambulance_24x7": 2,
+                "waiting_time": "20 minutes"
+            }
+        }
+    },
 ]
 
 
@@ -252,5 +308,6 @@ def success():
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
