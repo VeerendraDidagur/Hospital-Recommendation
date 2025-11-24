@@ -118,7 +118,32 @@ hospitals = [
         "rating": 4.7,
         "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
         "symptoms": ["COVID", "Stomach Pain", "Headache", "Cold and Cough", "Fever", "Constipation"],
-        "doctors": [],
+        "doctors": [
+             {
+                "name": "Dr. Shreyas",
+                "specialties": ["Fever", "Cold and Cough", "General Physician"],
+                "experience": 15,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+             {
+                "name": "Dr. Sushant Patil",
+                "specialties": ["Dentist", "Tooth Pain"],
+                "experience": 22,
+                "rating": 4.6,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+             {
+                "name": "Dr. Raghavendra Hosalli",
+                "specialties": ["Joint Pain", "Orthopedics"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+        ],
         "features": {
             "blood": {
                 "groups": ["B+", "O+", "AB+"],
@@ -227,3 +252,4 @@ def success():
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
