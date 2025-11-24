@@ -1,72 +1,96 @@
 <!doctype html>
 <html>
 <head>
-    <title>Doctors for {{ speciality }} | {{ hospital.name }}</title>
+    <title>Doctors for {{ symptom }} | {{ hospital.name }}</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
-.button-group {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-    justify-content: center;
-    margin-bottom: 20px;
+
+body {
+    font-family: Arial, sans-serif;
+    background: url("/static/images/wallpaper2.jpg") no-repeat center center fixed;
+    background-size: cover;
+    padding: 20px;
 }
 
-body { font-family: Arial, sans-serif; background: #f8f9fa; padding: 20px; }
+h1 {
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    text-align: center;
+    font-size: 38px;
+}
 
-h1, h2 { color: #222; text-align: center; }
+h3 {
+    color: #ffeeba;
+    text-shadow: 2px 2px 4px black;
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 22px;
+}
 
 .doctor-card {
     display: flex;
     gap: 25px;
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.9);
+    border-radius: 16px;
+    padding: 25px;
+    margin: 0 auto 30px;
+    width: 85%;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     align-items: center;
 }
 
 .doctor-photo {
-    width: 220px;
-    height: 170px;
-    border-radius: 10px;
+    width: 280px;
+    height: 240px;
+    border-radius: 12px;
     object-fit: cover;
+    border: 3px solid #007bff;
 }
 
 .doctor-details {
-    font-size: 17px;
+    font-size: 20px;
+    color: #333;
 }
+
+.doctor-details p { margin: 8px 0; }
 
 .book-btn {
-    background: #007bff;
+    background: #28a745;
     color: white;
     border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
+    padding: 12px 20px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 12px;
+    font-size: 18px;
+    margin-top: 15px;
 }
-.book-btn:hover { background: #0056b3; }
 
-.back { display: block; margin-top: 25px; text-align: center; font-size: 17px; }
+.book-btn:hover { background: #1f7a35; }
+
+.back {
+    display: block;
+    margin-top: 25px;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px black;
+}
 </style>
 </head>
 <body>
 
-<h1>Doctors for Symptom / Specialist: "{{ speciality }}"</h1>
-<h3 style="text-align:center;">🏥 Hospital: {{ hospital.name }}</h3>
+<h1>Doctors for Symptom / Specialist: "{{ symptom }}"</h1>
+<h3>🏥 Hospital: {{ hospital.name }}</h3>
 
 {% for d in doctors %}
 <form action="{{ url_for('book_doctor', hid=hospital.id) }}" method="POST" class="doctor-card">
 
-    {% set name_low = d.name.lower() %}
-    {% if "sneha" in name_low or "neha" in name_low %}
-        <img src="/static/images/dr2.jpg.jpg" class="doctor-photo">
-    {% else %}
+    <!-- Auto assign doctor image based on gender -->
+    {% if d.gender == "Male" %}
         <img src="/static/images/dr1.jpg.jpg" class="doctor-photo">
+    {% else %}
+        <img src="/static/images/dr2.jpg.jpg" class="doctor-photo">
     {% endif %}
 
     <div class="doctor-details">
@@ -76,8 +100,7 @@ h1, h2 { color: #222; text-align: center; }
         <p><strong>⭐ Rating:</strong> {{ d.rating }}</p>
         <p><strong>🎓 Qualification:</strong> {{ d.qualification }}</p>
 
-        <!-- Hidden fields -->
-        <input type="hidden" name="image" value="{{ d.image }}">
+        <!-- Hidden inputs -->
         <input type="hidden" name="name" value="{{ d.name }}">
         <input type="hidden" name="specialties" value="{{ d.specialties | join(', ') }}">
         <input type="hidden" name="experience" value="{{ d.experience }}">
