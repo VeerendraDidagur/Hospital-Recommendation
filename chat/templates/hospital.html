@@ -103,6 +103,15 @@
         {% endfor %}
     </div>
 
+    <hr>
+
+<a href="{{ url_for('hospital_features', hid=hospital.id) }}" 
+   class="btn" 
+   style="background:#6c03fc; font-size:18px;">
+   Additional Features ⚙️
+</a>
+
+
     <p><a href="{{ url_for('home') }}">← Back to Search</a></p>
 
 </body>
