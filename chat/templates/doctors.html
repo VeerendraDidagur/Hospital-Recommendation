@@ -86,11 +86,11 @@ h3 {
 {% for d in doctors %}
 <form action="{{ url_for('book_doctor', hid=hospital.id) }}" method="POST" class="doctor-card">
 
-    <!-- Auto assign doctor image based on gender -->
-    {% if d.gender == "Male" %}
-        <img src="/static/images/dr1.jpg.jpg" class="doctor-photo">
-    {% else %}
+    {% set name_low = d.name.lower() %}
+    {% if "sneha" in name_low or "neha" in name_low %}
         <img src="/static/images/dr2.jpg.jpg" class="doctor-photo">
+    {% else %}
+        <img src="/static/images/dr1.jpg.jpg" class="doctor-photo">
     {% endif %}
 
     <div class="doctor-details">
