@@ -10,7 +10,7 @@ hospitals = [
         "id": "h1",
         "name": "City Hospital",
         "location": "25/91 20th Main Road, 25/91, Chord Rd, 2nd Block, Rajajinagar, Bengaluru, Karnataka 560010",
-        "address": "City Hospital Rd, Bangalore, Karnataka",
+        "address": "XHW2+6C Bengaluru, Karnataka",
         "rating": 4.6,
         "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
         "symptoms": ["COVID", "Stomach Pain", "Headache", "Cold and Cough", "Fever", "Constipation"],
@@ -364,6 +364,7 @@ def success():
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
