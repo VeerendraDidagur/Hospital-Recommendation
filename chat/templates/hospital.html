@@ -74,9 +74,9 @@
         ⭐ <strong>Rating:</strong> {{ hospital.rating }}
         <br>
         <!-- GOOGLE MAPS BUTTON -->
-        <a href="https://www.google.com/maps/search/?api=1&query={{ hospital.address | urlencode }}" target="_blank"
-           class="view-location-btn">View Location 📍</a>
-    </div>
+        <a href="https://www.google.com/maps?q={{ hospital.location }}" target="_blank">
+        <button>Open in Maps</button>
+        </a>
 
     <h2>🔹 Most Common Symptoms</h2>
     <div class="button-group">
