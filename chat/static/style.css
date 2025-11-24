@@ -79,5 +79,19 @@ li {
 .btn:hover {
     background-color: #0056b3;
 }
+.book-btn {
+    background: #28a745;       /* Green */
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+}
+.book-btn:hover {
+    background: #1e7e34;      /* Darker green */
+}
+
 
 
