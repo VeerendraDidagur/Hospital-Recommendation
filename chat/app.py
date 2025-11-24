@@ -167,10 +167,10 @@ hospitals = [
         }
     },
      {
-        "id": "h2",
-        "name": "East Point Hospital",
-        "location": "East Point Hospital, Cheemasandra, Bengaluru",
-        "address": "3P39+M3 Bengaluru, Karnataka 560049",
+        "id": "h4",
+        "name": "Aster CMI Hospital",
+        "location": "43/2, NH 7, New Airport Road, Sahakar Nagar, Sanjeevini Nagar, Bengaluru, Karnataka 560092",
+        "address": "Bengaluru",
         "rating": 4.5,
         "specialists": ["Orthopedic", "Dentist", "Cardiologist", "ENT"],
         "symptoms": ["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"],
@@ -308,6 +308,7 @@ def success():
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
 
 
 
