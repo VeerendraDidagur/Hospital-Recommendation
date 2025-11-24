@@ -1,1 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Additional Features - {{ hospital.name }}</title>
+    <style>
+        body { font-family: Arial; text-align:center; background:#f8f9fa; padding:20px; }
+
+        .btn-f {
+            padding: 12px 20px;
+            margin: 7px;
+            background:#007bff;
+            color:white;
+            border-radius:8px;
+            font-size:17px;
+            cursor:pointer;
+            border:none;
+        }
+        .btn-f:hover { background:#0056b3; }
+
+        .card {
+            display:none;
+            width: 75%;
+            margin: 20px auto;
+            background:white;
+            border-radius:10px;
+            padding:25px;
+            font-size:18px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+            text-align:left;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+        }
+        .row input {
+            width: 45%;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .book-btn {
+            background: #28a745;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .book-btn:hover { background:#1e7e34; }
+
+        .success {
+            margin-top: 14px;
+            padding: 10px;
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            color: #155724;
+            font-size: 18px;
+            border-radius: 6px;
+        }
+
+        .back { margin-top:25px; display:block; }
+    </style>
+</head>
+<body>
+
+<h1>Additional Features</h1>
+<h2>{{ hospital.name }}</h2>
+<p>Select a service to view details:</p>
+
+<button class="btn-f" onclick="showCard('blood')">🩸 Blood Availability</button>
+<button class="btn-f" onclick="showCard('organ')">🧠 Organ Availability</button>
+<button class="btn-f" onclick="showCard('icu')">🏥 ICU / Ventilator Status</button>
+<button class="btn-f" onclick="showCard('emergency')">🚑 Emergency Services</button>
+
+<!-- BLOOD -->
+<div id="blood" class="card">
+    <b>Blood Groups Available:</b> {{ hospital.features.blood.groups }} <br><br>
+    <b>Units Available:</b> {{ hospital.features.blood.units }} <br><br>
+    <b>Emergency Blood Contact:</b> {{ hospital.features.blood.emergency_contact }} <br><br>
+
+    <div class="row">
+        <label>Blood Group:</label>
+        <input type="text" id="bloodGroup">
+    </div>
+    <div class="row">
+        <label>Quantity (Units):</label>
+        <input type="number" id="bloodQty">
+    </div>
+
+    <button class="book-btn" onclick="book('blood')">Book</button>
+    <div id="bloodSuccess" class="success" style="display:none;"></div>
+</div>
+
+<!-- ORGAN -->
+<div id="organ" class="card">
+    <b>Organs Available:</b> {{ hospital.features.organ.organs_available }} <br><br>
+    <b>Current Waiting List Status:</b> {{ hospital.features.organ.waiting_list }} <br><br>
+    <b>Transplant Specialist Contact:</b> {{ hospital.features.organ.contact }} <br><br>
+
+    <div class="row">
+        <label>Organ:</label>
+        <input type="text" id="organType">
+    </div>
+    <div class="row">
+        <label>Number:</label>
+        <input type="number" id="organQty">
+    </div>
+
+    <button class="book-btn" onclick="book('organ')">Book</button>
+    <div id="organSuccess" class="success" style="display:none;"></div>
+</div>
+
+<!-- ICU -->
+<div id="icu" class="card">
+    <b>ICU Beds Vacant:</b> {{ hospital.features.icu.icu_vacant }} <br><br>
+    <b>Normal Beds Vacant:</b> {{ hospital.features.icu.normal_beds }} <br><br>
+    <b>Ventilators Available:</b> {{ hospital.features.icu.ventilators }} <br><br><br>
+
+    <div class="row">
+        <label>Type (ICU Bed / Normal Bed / Ventilator):</label>
+        <input type="text" id="icuType">
+    </div>
+    <div class="row">
+        <label>Number:</label>
+        <input type="number" id="icuQty">
+    </div>
+
+    <button class="book-btn" onclick="book('icu')">Book</button>
+    <div id="icuSuccess" class="success" style="display:none;"></div>
+</div>
+
+<!-- EMERGENCY (NO BOOK BUTTON) -->
+<div id="emergency" class="card">
+    <b>Ambulances Available (24×7):</b> {{ hospital.features.emergency.ambulance_24x7 }} <br><br>
+    <b>Estimated Waiting Time:</b> {{ hospital.features.emergency.waiting_time }}
+</div>
+
+<script>
+function showCard(id) {
+    document.querySelectorAll(".card").forEach(c => c.style.display = "none");
+    document.getElementById(id).style.display = "block";
+}
+
+function book(type) {
+    if (type === "blood") {
+        let msg = "Booked: " + document.getElementById("bloodQty").value + " Units of " +
+                  document.getElementById("bloodGroup").value + " successfully!";
+        document.getElementById("bloodSuccess").innerText = msg;
+        document.getElementById("bloodSuccess").style.display = "block";
+    }
+    if (type === "organ") {
+        let msg = "Booked: " + document.getElementById("organQty").value + " " +
+                  document.getElementById("organType").value + "(s) successfully!";
+        document.getElementById("organSuccess").innerText = msg;
+        document.getElementById("organSuccess").style.display = "block";
+    }
+    if (type === "icu") {
+        let msg = "Booked: " + document.getElementById("icuQty").value + " " +
+                  document.getElementById("icuType").value + " successfully!";
+        document.getElementById("icuSuccess").innerText = msg;
+        document.getElementById("icuSuccess").style.display = "block";
+    }
+}
+</script>
+
+<a href="{{ url_for('hospital_detail', hid=hospital.id) }}" class="back">⬅ Back to Hospital Page</a>
+
+</body>
+</html>
 
