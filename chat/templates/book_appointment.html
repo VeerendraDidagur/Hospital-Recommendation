@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Book Appointment</title>
-
+    <title>Book Appointment - {{ doctor.name }}</title>
     <style>
         body { background:#f8f9fa; font-family: Arial, sans-serif; padding:20px; }
 
@@ -23,6 +22,7 @@
             margin-top: 10px;
         }
 
+        /* Booking card */
         .card {
             background:white;
             padding: 22px;
@@ -45,6 +45,7 @@
             margin-bottom: 18px;
         }
 
+        /* Today / Tomorrow */
         .day-btn {
             padding: 8px 20px;
             margin: 5px;
@@ -72,24 +73,9 @@
             cursor: pointer;
         }
 
-        .slot-btn.selected {
+        .slot-btn:hover {
             background:#28a745;
             color:white;
-        }
-
-        #confirmBtn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: grey;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: not-allowed;
-        }
-
-        #confirmBtn.enabled {
-            background: #28a745;
-            cursor: pointer;
         }
     </style>
 
@@ -101,20 +87,6 @@
 
             document.getElementById("slot-today").style.display = day === "today" ? "block" : "none";
             document.getElementById("slot-tomorrow").style.display = day === "tomorrow" ? "block" : "none";
-        }
-
-        function selectSlot(time, btn) {
-            document.getElementById("selected_time").value = time;
-
-            let buttons = document.querySelectorAll(".slot-btn");
-            buttons.forEach(b => b.classList.remove("selected"));
-
-            btn.classList.add("selected");
-
-            // enable confirm button
-            let confirmBtn = document.getElementById("confirmBtn");
-            confirmBtn.disabled = false;
-            confirmBtn.classList.add("enabled");
         }
     </script>
 </head>
@@ -141,38 +113,51 @@
         <button id="today" class="day-btn active" onclick="showSlots('today')">Today</button>
         <button id="tomorrow" class="day-btn" onclick="showSlots('tomorrow')">Tomorrow</button>
 
+<div id="slot-today" class="slots">
+    <button class="slot-btn" onclick="selectSlot('10:00 AM')">10:00 AM</button>
+    <button class="slot-btn" onclick="selectSlot('12:30 PM')">12:30 PM</button>
+    <button class="slot-btn" onclick="selectSlot('4:00 PM')">4:00 PM</button>
+    <button class="slot-btn" onclick="selectSlot('6:15 PM')">6:15 PM</button>
+</div>
 
-        <!-- TODAY SLOTS -->
-        <div id="slot-today" class="slots">
-            <button class="slot-btn" onclick="selectSlot('10:00 AM', this)">10:00 AM</button>
-            <button class="slot-btn" onclick="selectSlot('12:30 PM', this)">12:30 PM</button>
-            <button class="slot-btn" onclick="selectSlot('4:00 PM', this)">4:00 PM</button>
-            <button class="slot-btn" onclick="selectSlot('6:15 PM', this)">6:15 PM</button>
-        </div>
-
-        <!-- TOMORROW SLOTS -->
-        <div id="slot-tomorrow" class="slots" style="display:none;">
-            <button class="slot-btn" onclick="selectSlot('9:30 AM', this)">9:30 AM</button>
-            <button class="slot-btn" onclick="selectSlot('11:45 AM', this)">11:45 AM</button>
-            <button class="slot-btn" onclick="selectSlot('3:20 PM', this)">3:20 PM</button>
-            <button class="slot-btn" onclick="selectSlot('7:00 PM', this)">7:00 PM</button>
-        </div>
-
+<div id="slot-tomorrow" class="slots" style="display:none;">
+    <button class="slot-btn" onclick="selectSlot('9:30 AM')">9:30 AM</button>
+    <button class="slot-btn" onclick="selectSlot('11:45 AM')">11:45 AM</button>
+    <button class="slot-btn" onclick="selectSlot('3:20 PM')">3:20 PM</button>
+    <button class="slot-btn" onclick="selectSlot('7:00 PM')">7:00 PM</button>
+</div>   
         <br>
 
-        <!-- Submits to Flask -->
-        <form action="/confirm_appointment" method="POST">
+<!-- Disabled initially -->
+<button id="confirmBtn" disabled onclick="confirmAppointment()">
+    Confirm Appointment
+</button>
 
-            <input type="hidden" name="doctor_id" value="{{ doctor.id }}">
-            <input type="hidden" name="clinic_name" value="{{ clinic.name }}">
-            <input type="hidden" name="hospital_id" value="{{ hospital_id }}">
-            <input type="hidden" id="selected_time" name="timeslot">
+<script>
+    let selectedTime = "";
 
-            <button id="confirmBtn" disabled>
-                Confirm Appointment
-            </button>
-        </form>
+    function selectSlot(time) {
+        selectedTime = time;
 
+        // highlight selected slot
+        let buttons = document.querySelectorAll(".slot-btn");
+        buttons.forEach(btn => btn.style.background = "");
+        event.target.style.background = "#4CAF50";
+        event.target.style.color = "white";
+
+        // enable confirm button
+        document.getElementById("confirmBtn").disabled = false;
+
+        // store the selected time so success.html can display it
+        sessionStorage.setItem("appointment_time", time);
+    }
+
+    function confirmAppointment() {
+        window.location.href = "/success";
+ // go to success page
+    }
+</script>
+   
     </div>
 
 </body>
