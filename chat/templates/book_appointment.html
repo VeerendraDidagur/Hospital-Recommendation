@@ -9,23 +9,21 @@
             padding:20px;
         }
 
-        /* Doctor section row left image + right details */
-        .top-section {
-            display: flex;
-            align-items: center;
-            gap: 25px;
+        /* Centered doctor info */
+        .doctor-info-box {
+            text-align:center;
+            background:white;
+            padding: 18px;
+            width: 60%;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
             margin-bottom: 30px;
         }
 
-        .doctor-img {
-            border-radius: 12px;
-            width: 260px;
-            height: 200px;
-            object-fit: cover;
-        }
-
         .doctor-info {
-            font-size: 18px;
+            font-size: 19px;
+            line-height: 1.6;
         }
 
         /* Booking card */
@@ -66,6 +64,7 @@
             color: white;
         }
 
+        /* Slot styling */
         .slots {
             margin-top: 15px;
             text-align:center;
@@ -79,7 +78,6 @@
             border: 1px solid #28a745;
             cursor: pointer;
         }
-
         .slot-btn:hover {
             background:#28a745;
             color:white;
@@ -97,7 +95,6 @@
             display:block;
             margin: 18px auto 0;
         }
-
         #confirmBtn.enabled {
             background: #28a745;
             cursor: pointer;
@@ -117,10 +114,8 @@
 </head>
 <body>
 
-    <!-- Doctor Details -->
-    <div class="top-section">
-        <img src="{{ doctor.image }}" class="doctor-img">
-
+    <!-- Center doctor info -->
+    <div class="doctor-info-box">
         <div class="doctor-info">
             <b style="font-size:24px;">{{ doctor.name }}</b><br><br>
             <b>Specialist:</b> {{ doctor.specialties }} <br>
@@ -142,7 +137,6 @@
         <button id="today" class="day-btn active" onclick="showSlots('today')">Today</button>
         <button id="tomorrow" class="day-btn" onclick="showSlots('tomorrow')">Tomorrow</button>
 
-        <!-- Time Slots -->
         <div id="slot-today" class="slots">
             <button class="slot-btn" onclick="selectSlot('10:00 AM', event)">10:00 AM</button>
             <button class="slot-btn" onclick="selectSlot('12:30 PM', event)">12:30 PM</button>
