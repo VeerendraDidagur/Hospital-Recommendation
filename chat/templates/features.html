@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Additional Features - {{ hospital.name }}</title>
+    <style>
+        body { font-family: Arial; text-align:center; background:#f8f9fa; padding:20px; }
+
+        .btn-f {
+            padding: 12px 20px;
+            margin: 7px;
+            background:#007bff;
+            color:white;
+            border-radius:8px;
+            font-size:17px;
+            cursor:pointer;
+            border:none;
+        }
+        .btn-f:hover { background:#0056b3; }
+
+        .card {
+            display:none;
+            width: 65%;
+            margin: 20px auto;
+            background:white;
+            border-radius:10px;
+            padding:20px;
+            font-size:18px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+            text-align:left;
+        }
+        .back { margin-top:25px; display:block; }
+    </style>
+</head>
+<body>
+
+<h1>Additional Features</h1>
+<h2>{{ hospital.name }}</h2>
+<p>Select a service to view details:</p>
+
+<button class="btn-f" onclick="showCard('blood')">🩸 Blood Availability</button>
+<button class="btn-f" onclick="showCard('organ')">🧠 Organ Availability</button>
+<button class="btn-f" onclick="showCard('icu')">🏥 ICU / Ventilator Status</button>
+<button class="btn-f" onclick="showCard('emergency')">🚑 Emergency Services</button>
+
+<!-- BLOOD -->
+<div id="blood" class="card">
+    <b>Blood Groups Available:</b> {{ hospital.features.blood.groups }} <br><br>
+    <b>Units Available:</b> {{ hospital.features.blood.units }} <br><br>
+    <b>Emergency Contact:</b> {{ hospital.features.blood.emergency_contact }}
+</div>
+
+<!-- ORGAN -->
+<div id="organ" class="card">
+    <b>Organs Available:</b> {{ hospital.features.organ.organs_available }} <br><br>
+    <b>Waiting List:</b> {{ hospital.features.organ.waiting_list }} <br><br>
+    <b>Specialist Contact:</b> {{ hospital.features.organ.contact }}
+</div>
+
+<!-- ICU -->
+<div id="icu" class="card">
+    <b>ICU Beds Vacant:</b> {{ hospital.features.icu.icu_vacant }} <br><br>
+    <b>Normal Beds Vacant:</b> {{ hospital.features.icu.normal_beds }} <br><br>
+    <b>Ventilators Available:</b> {{ hospital.features.icu.ventilators }}
+</div>
+
+<!-- EMERGENCY -->
+<div id="emergency" class="card">
+    <b>Ambulances Available (24×7):</b> {{ hospital.features.emergency.ambulance_24x7 }} <br><br>
+    <b>Estimated Waiting Time:</b> {{ hospital.features.emergency.waiting_time }}
+</div>
+
+<script>
+function showCard(id) {
+    document.querySelectorAll(".card").forEach(c => c.style.display = "none");
+    document.getElementById(id).style.display = "block";
+}
+</script>
+
+<a href="{{ url_for('hospital_detail', hid=hospital.id) }}" class="back">⬅ Back to Hospital Page</a>
+
+</body>
+</html>
