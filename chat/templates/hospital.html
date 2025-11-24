@@ -4,47 +4,106 @@
     <title>{{ hospital.name }} - Details</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
-        .section { margin-bottom: 20px; }
-        .tag { display: inline-block; padding: 6px 12px; margin: 4px; background: #f0f0f0; border-radius: 8px; cursor: pointer; }
-        .tag:hover { background: #d1e7dd; }
-        .symptom-form { margin-top: 15px; }
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 38px;
+            margin-bottom: 5px;
+        }
+
+        .hospital-info {
+            font-size: 20px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .view-location-btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 10px 18px;
+            font-size: 17px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: .25s;
+        }
+
+        .view-location-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.06);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        hr {
+            width: 80%;
+            margin: 25px auto;
+        }
     </style>
 </head>
 <body>
 
     <h1>{{ hospital.name }}</h1>
 
-    <p><strong>📍 Location:</strong> {{ hospital.location }}</p>
-    <p><strong>🏥 Address:</strong> {{ hospital.address }}</p>
-    <p><strong>⭐ Rating:</strong> {{ hospital.rating }}</p>
-
+    <div class="hospital-info">
+        📍 <strong>Location:</strong> {{ hospital.location }} <br>
+        🏥 <strong>Address:</strong> {{ hospital.address }} <br>
+        ⭐ <strong>Rating:</strong> {{ hospital.rating }}
+        <br>
+        <!-- GOOGLE MAPS BUTTON -->
+        <a href="https://www.google.com/maps/search/?api=1&query={{ hospital.address | urlencode }}" target="_blank"
+           class="view-location-btn">View Location 📍</a>
+    </div>
 
     <h2>🔹 Most Common Symptoms</h2>
-<div class="button-group">
-    <a href="/choose_doctor?speciality=Headache" class="btn">Headache</a>
-    <a href="/choose_doctor?speciality=Chest Pain" class="btn">Chest Pain</a>
-    <a href="/choose_doctor?speciality=Fever" class="btn">Fever</a>
-    <a href="/choose_doctor?speciality=Back Pain" class="btn">Back Pain</a>
-    {% for sym in hospital.symptoms %}
-        <a class="btn" href="{{ url_for('choose_doctor', speciality=sym, hid=hospital.id) }}">{{ sym }}</a>
-    {% endfor %}
-</div>
+    <div class="button-group">
+        <a href="/choose_doctor?speciality=Headache" class="btn">Headache</a>
+        <a href="/choose_doctor?speciality=Chest Pain" class="btn">Chest Pain</a>
+        <a href="/choose_doctor?speciality=Fever" class="btn">Fever</a>
+        <a href="/choose_doctor?speciality=Back Pain" class="btn">Back Pain</a>
+        {% for sym in hospital.symptoms %}
+            <a class="btn" href="{{ url_for('choose_doctor', speciality=sym, hid=hospital.id) }}">{{ sym }}</a>
+        {% endfor %}
+    </div>
 
-<hr>
+    <hr>
 
-<h2>🔹 Most Searched Specialists</h2>
-<div class="button-group">
-    <a href="/choose_doctor?speciality=Neurologist" class="btn">Neurologist</a>
-    <a href="/choose_doctor?speciality=Cardiologist" class="btn">Cardiologist</a>
-    <a href="/choose_doctor?speciality=Orthopedician" class="btn">Orthopedician</a>
-    <a href="/choose_doctor?speciality=Dermatologist" class="btn">Dermatologist</a>
-    <a href="/choose_doctor?speciality=Pediatrician" class="btn">Pediatrician</a>
-    {% for sp in hospital.specialists %}
-        <a class="btn" href="{{ url_for('choose_doctor', speciality=sp, hid=hospital.id) }}">{{ sp }}</a>
-    {% endfor %}
-</div>
+    <h2>🔹 Most Searched Specialists</h2>
+    <div class="button-group">
+        <a href="/choose_doctor?speciality=Neurologist" class="btn">Neurologist</a>
+        <a href="/choose_doctor?speciality=Cardiologist" class="btn">Cardiologist</a>
+        <a href="/choose_doctor?speciality=Orthopedician" class="btn">Orthopedician</a>
+        <a href="/choose_doctor?speciality=Dermatologist" class="btn">Dermatologist</a>
+        <a href="/choose_doctor?speciality=Pediatrician" class="btn">Pediatrician</a>
+        {% for sp in hospital.specialists %}
+            <a class="btn" href="{{ url_for('choose_doctor', speciality=sp, hid=hospital.id) }}">{{ sp }}</a>
+        {% endfor %}
+    </div>
 
     <p><a href="{{ url_for('home') }}">← Back to Search</a></p>
+
 </body>
 </html>
-   
