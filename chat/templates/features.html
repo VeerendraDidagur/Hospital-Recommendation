@@ -29,8 +29,16 @@
             text-align:left;
         }
 
-        .row { display: flex; justify-content: space-between; margin: 12px 0; }
-        .row input { width: 45%; padding: 8px; font-size: 16px; }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+        }
+        .row input {
+            width: 45%;
+            padding: 8px;
+            font-size: 16px;
+        }
 
         .book-btn {
             background: #28a745;
@@ -44,15 +52,15 @@
         }
         .book-btn:hover { background:#1e7e34; }
 
-        .success, .error {
+        .success {
             margin-top: 14px;
             padding: 10px;
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            color: #155724;
             font-size: 18px;
             border-radius: 6px;
-            display:none;
         }
-        .success { background:#d4edda; border-left:5px solid #28a745; color:#155724; }
-        .error { background:#f8d7da; border-left:5px solid #dc3545; color:#721c24; }
 
         .back { margin-top:25px; display:block; }
     </style>
@@ -70,8 +78,8 @@
 
 <!-- BLOOD -->
 <div id="blood" class="card">
-    <b>Blood Groups Available:</b> <span id="bloodGroups">{{ hospital.features.blood.groups }}</span> <br><br>
-    <b>Units Available:</b> <span id="bloodUnits">{{ hospital.features.blood.units }}</span> <br><br>
+    <b>Blood Groups Available:</b> {{ hospital.features.blood.groups }} <br><br>
+    <b>Units Available:</b> {{ hospital.features.blood.units }} <br><br>
     <b>Emergency Blood Contact:</b> {{ hospital.features.blood.emergency_contact }} <br><br>
 
     <div class="row">
@@ -84,13 +92,12 @@
     </div>
 
     <button class="book-btn" onclick="book('blood')">Book</button>
-    <div id="bloodSuccess" class="success"></div>
-    <div id="bloodError" class="error"></div>
+    <div id="bloodSuccess" class="success" style="display:none;"></div>
 </div>
 
 <!-- ORGAN -->
 <div id="organ" class="card">
-    <b>Organs Available:</b> <span id="orgList">{{ hospital.features.organ.organs_available }}</span> <br><br>
+    <b>Organs Available:</b> {{ hospital.features.organ.organs_available }} <br><br>
     <b>Current Waiting List Status:</b> {{ hospital.features.organ.waiting_list }} <br><br>
     <b>Transplant Specialist Contact:</b> {{ hospital.features.organ.contact }} <br><br>
 
@@ -104,18 +111,17 @@
     </div>
 
     <button class="book-btn" onclick="book('organ')">Book</button>
-    <div id="organSuccess" class="success"></div>
-    <div id="organError" class="error"></div>
+    <div id="organSuccess" class="success" style="display:none;"></div>
 </div>
 
 <!-- ICU -->
 <div id="icu" class="card">
-    <b>ICU Beds Vacant:</b> <span id="icuVacant">{{ hospital.features.icu.icu_vacant }}</span> <br><br>
-    <b>Normal Beds Vacant:</b> <span id="normalBeds">{{ hospital.features.icu.normal_beds }}</span> <br><br>
-    <b>Ventilators Available:</b> <span id="ventilators">{{ hospital.features.icu.ventilators }}</span> <br><br><br>
+    <b>ICU Beds Vacant:</b> {{ hospital.features.icu.icu_vacant }} <br><br>
+    <b>Normal Beds Vacant:</b> {{ hospital.features.icu.normal_beds }} <br><br>
+    <b>Ventilators Available:</b> {{ hospital.features.icu.ventilators }} <br><br><br>
 
     <div class="row">
-        <label>Type (ICU / Normal / Ventilator):</label>
+        <label>Type (ICU Bed / Normal Bed / Ventilator):</label>
         <input type="text" id="icuType">
     </div>
     <div class="row">
@@ -124,8 +130,7 @@
     </div>
 
     <button class="book-btn" onclick="book('icu')">Book</button>
-    <div id="icuSuccess" class="success"></div>
-    <div id="icuError" class="error"></div>
+    <div id="icuSuccess" class="success" style="display:none;"></div>
 </div>
 
 <!-- EMERGENCY (NO BOOK BUTTON) -->
@@ -142,60 +147,28 @@ function showCard(id) {
 
 function book(type) {
     if (type === "blood") {
-        let groups = document.getElementById("bloodGroups").innerText.split(",").map(g => g.trim());
-        let bg = document.getElementById("bloodGroup").value.trim();
-        let qty = parseInt(document.getElementById("bloodQty").value);
-        let available = parseInt(document.getElementById("bloodUnits").innerText);
-
-        if (!groups.includes(bg) || qty > available || qty <= 0)
-            return showError("bloodError", "Enter a valid function");
-
-        document.getElementById("bloodUnits").innerText = available - qty;
-        showSuccess("bloodSuccess", `Booked ${qty} Units of ${bg} Successfully ✔`);
+        let msg = "Booked: " + document.getElementById("bloodQty").value + " Units of " +
+                  document.getElementById("bloodGroup").value + " successfully!";
+        document.getElementById("bloodSuccess").innerText = msg;
+        document.getElementById("bloodSuccess").style.display = "block";
     }
-
     if (type === "organ") {
-        let list = document.getElementById("orgList").innerText.split(",");
-        let organ = document.getElementById("organType").value.trim();
-        let qty = parseInt(document.getElementById("organQty").value);
-        if (!list.includes(organ) || qty <= 0)
-            return showError("organError", "Enter a valid function");
-
-        showSuccess("organSuccess", `Booked ${qty} ${organ}(s) Successfully ✔`);
+        let msg = "Booked: " + document.getElementById("organQty").value + " " +
+                  document.getElementById("organType").value + "(s) successfully!";
+        document.getElementById("organSuccess").innerText = msg;
+        document.getElementById("organSuccess").style.display = "block";
     }
-
     if (type === "icu") {
-        let typeIn = document.getElementById("icuType").value.trim().toLowerCase();
-        let qty = parseInt(document.getElementById("icuQty").value);
-
-        let map = {
-            "icu": "icuVacant",
-            "normal": "normalBeds",
-            "ventilator": "ventilators"
-        };
-
-        if (!map[typeIn] || qty <= 0)
-            return showError("icuError", "Enter a valid function");
-
-        let available = parseInt(document.getElementById(map[typeIn]).innerText);
-        if (qty > available)
-            return showError("icuError", "Enter a valid function");
-
-        document.getElementById(map[typeIn]).innerText = available - qty;
-        showSuccess("icuSuccess", `Booked ${qty} ${typeIn}(s) Successfully ✔`);
+        let msg = "Booked: " + document.getElementById("icuQty").value + " " +
+                  document.getElementById("icuType").value + " successfully!";
+        document.getElementById("icuSuccess").innerText = msg;
+        document.getElementById("icuSuccess").style.display = "block";
     }
-}
-
-function showSuccess(id, msg) {
-    document.getElementById(id).innerText = msg;
-    document.getElementById(id).style.display = "block";
-}
-function showError(id, msg) {
-    document.getElementById(id).innerText = msg;
-    document.getElementById(id).style.display = "block";
 }
 </script>
 
 <a href="{{ url_for('hospital_detail', hid=hospital.id) }}" class="back">⬅ Back to Hospital Page</a>
+
 </body>
 </html>
+
