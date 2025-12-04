@@ -1,16 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
-app.secret_key = "stock_update_key"  # required for flash messages
 
 # -----------------------------
-# Sample hospital + doctors data (includes "features")
+# Sample hospital + doctors data (now includes "features")
 # -----------------------------
 hospitals = [
     {
         "id": "h1",
         "name": "City Hospital",
-        "location": "25/91 20th Main Road, Rajajinagar, Bengaluru, Karnataka 560010",
+        "location": "25/91 20th Main Road, 25/91, Chord Rd, 2nd Block, Rajajinagar, Bengaluru, Karnataka 560010",
         "address": "XHW2+6C Bengaluru, Karnataka",
         "rating": 4.6,
         "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
@@ -55,8 +54,232 @@ hospitals = [
             }
         }
     },
-    # ... other hospitals unchanged (h2..h5) ...
+    {
+        "id": "h2",
+        "name": "East Point Hospital",
+        "location": "East Point Hospital, Cheemasandra, Bengaluru",
+        "address": "3P39+M3 Bengaluru, Karnataka 560049",
+        "rating": 4.5,
+        "specialists": ["Orthopedic", "Dentist", "Cardiologist", "ENT"],
+        "symptoms": ["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"],
+        "doctors": [
+            {
+                "name": "Dr. Ramesh Kumar",
+                "specialties": ["Joint Pain", "Orthopedics"],
+                "experience": 15,
+                "rating": 4.9,
+                "qualification": "MBBS, MS Ortho",
+                "image": "https://i.pravatar.cc/150?img=65"
+            },
+            {
+                "name": "Dr. Mayank Patil",
+                "specialties": ["Fever", "Dentist", "General Physician"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+            {
+                "name": "Dr. Neha Varma",
+                "specialties": ["Dentist", "Tooth Pain"],
+                "experience": 7,
+                "rating": 4.5,
+                "qualification": "BDS, MDS",
+                "image": "https://i.pravatar.cc/150?img=5"
+            },
+        ],
+        "features": {
+            "blood": {
+                "groups": ["A+", "A-", "O+", "O-"],
+                "units": {"A+": 8, "A-": 3, "O+": 20, "O-": 7},
+                "emergency_contact": "+91 99876 54321"
+            },
+            "organ": {
+                "organs_available": ["Kidney", "Liver", "Eyes"],
+                "waiting_list": "2 Kidney, 0 Hearts",
+                "contact": "+91 90123 45678"
+            },
+            "icu": {
+                "icu_vacant": 5,
+                "normal_beds": 6,
+                "ventilators": 4
+            },
+            "emergency": {
+                "ambulance_24x7": 2,
+                "waiting_time": "20 minutes"
+            }
+        }
+    },
+    {
+        "id": "h3",
+        "name": "M S Ramaiah Hospital",
+        "location": "New BEL Rd, M S Ramaiah Nagar, MSRIT Post, Bengaluru, Karnataka 560054",
+        "address": "2HH9+8W Bengaluru, Karnataka",
+        "rating": 4.7,
+        "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
+        "symptoms": ["COVID", "Stomach Pain", "Headache", "Cold and Cough", "Fever", "Constipation"],
+        "doctors": [
+             {
+                "name": "Dr. Shreyas",
+                "specialties": ["Fever", "Cold and Cough", "General Physician"],
+                "experience": 15,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+             {
+                "name": "Dr. Sushant Patil",
+                "specialties": ["Dentist", "Tooth Pain"],
+                "experience": 22,
+                "rating": 4.6,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+             {
+                "name": "Dr. Raghavendra Hosalli",
+                "specialties": ["Joint Pain", "Orthopedics"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+        ],
+        "features": {
+            "blood": {
+                "groups": ["B+", "O+", "AB+"],
+                "units": {"B+": 5, "O+": 10, "AB+": 1},
+                "emergency_contact": "+91 90000 11111"
+            },
+            "organ": {
+                "organs_available": ["Kidney", "Liver"],
+                "waiting_list": "3 Kidney, 1 Heart",
+                "contact": "+91 90000 22222"
+            },
+            "icu": {
+                "icu_vacant": 3,
+                "normal_beds": 8,
+                "ventilators": 2
+            },
+            "emergency": {
+                "ambulance_24x7": 4,
+                "waiting_time": "10 minutes"
+            }
+        }
+    },
+     {
+        "id": "h4",
+        "name": "Aster CMI Hospital",
+        "location": "43/2, NH 7, New Airport Road, Sahakar Nagar, Sanjeevini Nagar, Bengaluru, Karnataka 560092",
+        "address": "3H3R+QJ Bengaluru, Karnataka",
+        "rating": 4.5,
+        "specialists": ["Orthopedic", "Dentist", "Cardiologist", "ENT"],
+        "symptoms": ["Chest Pain", "Headache", "Skin Allergy", "Joint Pain"],
+        "doctors": [
+            {
+                "name": "Dr. Ramesh Kumar",
+                "specialties": ["Joint Pain", "Orthopedics"],
+                "experience": 15,
+                "rating": 4.9,
+                "qualification": "MBBS, MS Ortho",
+                "image": "https://i.pravatar.cc/150?img=65"
+            },
+            {
+                "name": "Dr. Mayank Patil",
+                "specialties": ["Fever", "Dentist", "General Physician"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+            {
+                "name": "Dr. Neha Varma",
+                "specialties": ["Dentist", "Tooth Pain"],
+                "experience": 7,
+                "rating": 4.5,
+                "qualification": "BDS, MDS",
+                "image": "https://i.pravatar.cc/150?img=5"
+            },
+        ],
+        "features": {
+            "blood": {
+                "groups": ["A+", "A-", "O+", "O-"],
+                "units": {"A+": 8, "A-": 3, "O+": 20, "O-": 7},
+                "emergency_contact": "+91 99876 54321"
+            },
+            "organ": {
+                "organs_available": ["Kidney", "Liver", "Eyes"],
+                "waiting_list": "2 Kidney, 0 Hearts",
+                "contact": "+91 90123 45678"
+            },
+            "icu": {
+                "icu_vacant": 5,
+                "normal_beds": 6,
+                "ventilators": 4
+            },
+            "emergency": {
+                "ambulance_24x7": 2,
+                "waiting_time": "20 minutes"
+            }
+        }
+    },
+    {
+        "id": "h5",
+        "name": "Bangalore Baptist Hospital",
+        "location": "Bellary Rd, Vinayakanagar, Hebbal, Bengaluru, Karnataka 560032",
+        "address": "2HPQ+6R Bengaluru, Karnataka",
+        "rating": 4.7,
+        "specialists": ["Cardiologist", "Neurologist", "ENT", "General Physician", "Dermatologist"],
+        "symptoms": ["COVID", "Stomach Pain", "Headache", "Cold and Cough", "Fever", "Constipation"],
+        "doctors": [
+             {
+                "name": "Dr. Shreyas",
+                "specialties": ["Fever", "Cold and Cough", "General Physician"],
+                "experience": 15,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+             {
+                "name": "Dr. Sushant Patil",
+                "specialties": ["Dentist", "Tooth Pain"],
+                "experience": 22,
+                "rating": 4.6,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+             {
+                "name": "Dr. Raghavendra Hosalli",
+                "specialties": ["Joint Pain", "Orthopedics"],
+                "experience": 12,
+                "rating": 4.8,
+                "qualification": "MBBS, MD",
+                "image": "https://i.pravatar.cc/150?img=68"
+            },
+        ],
+        "features": {
+            "blood": {
+                "groups": ["B+", "O+", "AB+"],
+                "units": {"B+": 5, "O+": 10, "AB+": 1},
+                "emergency_contact": "+91 90000 11111"
+            },
+            "organ": {
+                "organs_available": ["Kidney", "Liver"],
+                "waiting_list": "3 Kidney, 1 Heart",
+                "contact": "+91 90000 22222"
+            },
+            "icu": {
+                "icu_vacant": 3,
+                "normal_beds": 8,
+                "ventilators": 2
+            },
+            "emergency": {
+                "ambulance_24x7": 4,
+                "waiting_time": "10 minutes"
+            }
+        }
+    },
 ]
+
 
 # ---------------------------------
 # ROUTES
@@ -76,13 +299,14 @@ def hospital_detail(hid):
     h = next((x for x in hospitals if x["id"] == hid), None)
     if not h:
         return "Hospital not found", 404
+    # pass a google maps link to template (template will urlencode)
     maps_link = f"https://www.google.com/maps/search/?api=1&query={h['address']}"
     return render_template("hospital.html", hospital=h, maps_link=maps_link)
 
 
 @app.route('/choose_doctor')
 def choose_doctor():
-    speciality = request.args.get('speciality', '')
+    speciality = request.args.get('speciality')
     hid = request.args.get('hid')
     h = next((x for x in hospitals if x["id"] == hid), None)
     if not h:
@@ -93,7 +317,7 @@ def choose_doctor():
 
 @app.route('/choose_symptom')
 def choose_symptom():
-    symptom = request.args.get('symptom', '')
+    symptom = request.args.get('symptom')
     hid = request.args.get('hid')
     h = next((x for x in hospitals if x["id"] == hid), None)
     if not h:
@@ -118,6 +342,7 @@ def book_doctor(hid):
     }
 
     clinic = {"name": h["name"], "fee": 700}
+
     return render_template("book_appointment.html", doctor=doctor, clinic=clinic, hospital=h)
 
 
@@ -127,135 +352,6 @@ def hospital_features(hid):
     if not h:
         return "Hospital not found", 404
     return render_template("features.html", hospital=h)
-
-
-# -------------------------
-# BOOK BLOOD
-# -------------------------
-@app.route("/book_blood/<hid>", methods=["POST"])
-def book_blood(hid):
-    hospital = next((h for h in hospitals if h["id"] == hid), None)
-    if not hospital:
-        flash("Hospital not found")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    group = (request.form.get("blood_group") or "").strip()
-    try:
-        qty = int(request.form.get("quantity", 0))
-    except (ValueError, TypeError):
-        flash("Enter a valid quantity")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    units = hospital["features"]["blood"]["units"]
-
-    # validation
-    if group == "" or group not in units:
-        flash("Enter a valid function")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    if qty <= 0:
-        flash("Enter a valid quantity")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    if units[group] < qty:
-        flash("Not enough quantity available")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    # update
-    units[group] -= qty
-
-    # if group becomes zero, remove from units dict and groups list
-    if units[group] == 0:
-        del units[group]
-        groups_list = hospital["features"]["blood"].get("groups", [])
-        if group in groups_list:
-            groups_list.remove(group)
-
-    flash("Booked Successfully ✔")
-    return redirect(url_for('hospital_features', hid=hid))
-
-
-# -------------------------
-# BOOK ORGAN
-# -------------------------
-@app.route("/book_organ/<hid>", methods=["POST"])
-def book_organ(hid):
-    hospital = next((h for h in hospitals if h["id"] == hid), None)
-    if not hospital:
-        flash("Hospital not found")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    organ = (request.form.get("organ_name") or "").strip()
-    try:
-        qty = int(request.form.get("quantity", 1))
-    except (ValueError, TypeError):
-        flash("Enter a valid quantity")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    available_list = hospital["features"]["organ"].get("organs_available", [])
-
-    # validation: organ must exist in list
-    if organ == "" or organ not in available_list:
-        flash("Enter a valid function")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    # For organs we assume booking reserves the organ(s) and we remove it if booked.
-    # If you later want counts for organs, change structure to a dict similar to blood units.
-    # Here we accept qty and remove the organ if qty >=1 (single organ items)
-    # (You could extend this later)
-    # remove organ from available list
-    for _ in range(qty):
-        if organ in available_list:
-            available_list.remove(organ)
-
-    flash("Booked Successfully ✔")
-    return redirect(url_for('hospital_features', hid=hid))
-
-
-# -------------------------
-# BOOK ICU / VENTILATOR
-# -------------------------
-@app.route("/book_icu/<hid>", methods=["POST"])
-def book_icu(hid):
-    hospital = next((h for h in hospitals if h["id"] == hid), None)
-    if not hospital:
-        flash("Hospital not found")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    icu_type_raw = (request.form.get("icu_type") or "").strip().lower()
-    try:
-        qty = int(request.form.get("quantity", 0))
-    except (ValueError, TypeError):
-        flash("Enter a valid quantity")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    # map friendly names to internal keys
-    mapping = {
-        "icu": "icu_vacant",
-        "icu bed": "icu_vacant",
-        "normal": "normal_beds",
-        "normal bed": "normal_beds",
-        "ventilator": "ventilators",
-        "ventilators": "ventilators"
-    }
-
-    key = mapping.get(icu_type_raw)
-    if not key:
-        flash("Enter a valid function")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    if qty <= 0:
-        flash("Enter a valid quantity")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    available = hospital["features"]["icu"].get(key, 0)
-    if available < qty:
-        flash("Not enough quantity available")
-        return redirect(url_for('hospital_features', hid=hid))
-
-    hospital["features"]["icu"][key] = available - qty
-    flash("Booked Successfully ✔")
-    return redirect(url_for('hospital_features', hid=hid))
 
 
 @app.route("/success")
@@ -268,3 +364,8 @@ def success():
 # -------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+
+
+
+
+
