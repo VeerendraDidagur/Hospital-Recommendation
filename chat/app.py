@@ -353,35 +353,56 @@ def hospital_features(hid):
         return "Hospital not found", 404
     return render_template("features.html", hospital=h)
 
-@app.route("/book_feature/<int:hid>", methods=["POST"])
-def book_feature(hid):
-    data = request.json
-    ftype = data["type"]         # blood / organ / icu
-    name = data["name"]          # blood group / organ name / icu type
-    qty = int(data["qty"])
+app.secret_key = "stock_update_key"
+@app.route("/book_blood/<hid>", methods=["POST"])
+def book_blood(hid):
+    hospital = next((h for h in hospitals if h["id"] == hid), None)
+    group = request.form.get("blood_group")
+    qty = int(request.form.get("quantity", 0))
 
-    hospital = next(h for h in hospitals if h["id"] == hid)
+    if group not in hospital["features"]["blood"]["units"]:
+        flash("Enter a valid function")
+        return redirect(f"/hospital/{hid}/features")
 
-    if ftype == "blood":
-        if hospital["features"]["blood"]["groups"][name] >= qty:
-            hospital["features"]["blood"]["groups"][name] -= qty
-            if hospital["features"]["blood"]["groups"][name] == 0:
-                del hospital["features"]["blood"]["groups"][name]
-        return jsonify({"success": True})
+    if hospital["features"]["blood"]["units"][group] < qty:
+        flash("Not enough quantity available")
+        return redirect(f"/hospital/{hid}/features")
 
-    if ftype == "organ":
-        if hospital["features"]["organ"]["organs_available"][name] >= qty:
-            hospital["features"]["organ"]["organs_available"][name] -= qty
-            if hospital["features"]["organ"]["organs_available"][name] == 0:
-                del hospital["features"]["organ"]["organs_available"][name]
-        return jsonify({"success": True})
+    hospital["features"]["blood"]["units"][group] -= qty
+    flash("Booked Successfully ✔")
+    return redirect(f"/hospital/{hid}/features")
+    
+@app.route("/book_organ/<hid>", methods=["POST"])
+def book_organ(hid):
+    hospital = next((h for h in hospitals if h["id"] == hid), None)
+    organ = request.form.get("organ_name")
 
-    if ftype == "icu":
-        key_map = {"ICU": "icu_vacant", "Normal": "normal_beds", "Ventilator": "ventilators"}
-        real_key = key_map[name]
-        if hospital["features"]["icu"][real_key] >= qty:
-            hospital["features"]["icu"][real_key] -= qty
-        return jsonify({"success": True})
+    if organ not in hospital["features"]["organ"]["available"]:
+        flash("Enter a valid function")
+        return redirect(f"/hospital/{hid}/features")
+
+    hospital["features"]["organ"]["available"].remove(organ)
+    flash("Booked Successfully ✔")
+    return redirect(f"/hospital/{hid}/features")
+
+@app.route("/book_icu/<hid>", methods=["POST"])
+def book_icu(hid):
+    hospital = next((h for h in hospitals if h["id"] == hid), None)
+    icu_type = request.form.get("icu_type")
+    qty = int(request.form.get("quantity", 0))
+
+    if icu_type not in ["icu_vacant", "normal_beds", "ventilators"]:
+        flash("Enter a valid function")
+        return redirect(f"/hospital/{hid}/features")
+
+    if hospital["features"]["icu"][icu_type] < qty:
+        flash("Not enough quantity available")
+        return redirect(f"/hospital/{hid}/features")
+
+    hospital["features"]["icu"][icu_type] -= qty
+    flash("Booked Successfully ✔")
+    return redirect(f"/hospital/{hid}/features")
+
 
 
 
