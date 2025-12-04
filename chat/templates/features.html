@@ -142,7 +142,7 @@ function showCard(id) {
 
 function book(type) {
     if (type === "blood") {
-        let groups = document.getElementById("bloodGroups").innerText.split(",");
+        let groups = document.getElementById("bloodGroups").innerText.split(",").map(g => g.trim());
         let bg = document.getElementById("bloodGroup").value.trim();
         let qty = parseInt(document.getElementById("bloodQty").value);
         let available = parseInt(document.getElementById("bloodUnits").innerText);
